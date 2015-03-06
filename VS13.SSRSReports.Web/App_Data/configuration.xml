@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<reports>
+  <report name="Report11">
+    <Configuration name="Report 11" src="Reports\\Department1\\Report 11.rdlc" ds="DataSet1" usp="" tbl="NewTable" />
+  </report>
+</reports>

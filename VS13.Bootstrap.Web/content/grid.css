@@ -1,0 +1,15 @@
+h4 {
+	margin-top: 25px;
+}
+.row {
+	margin-bottom: 20px;
+}
+.row .row {
+	margin-top: 10px; margin-bottom: 0px;
+}
+[class*='col-'] {
+	border: 1px solid rgba(86, 61, 124, 0.2); border-image: none; padding-top: 15px; padding-bottom: 15px; background-color: rgba(86, 61, 124, 0.15);
+}
+hr {
+	margin-top: 40px; margin-bottom: 40px;
+}

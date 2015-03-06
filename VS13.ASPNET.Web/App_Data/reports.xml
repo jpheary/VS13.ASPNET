@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<reports Text="jpHeary">
+  <department Text="Customer Service">
+    <report Text="Client Requests" Value="" NavigateUrl="#" ToolTip="" />
+  </department>
+  <department Text="Finance">
+    <report Text="Acounts Payable" Value="" NavigateUrl="#" ToolTip="" />
+    <report Text="Accounts Receivable" Value="" NavigateUrl="#" ToolTip="" />
+  </department>
+  <department Text="Operations">
+    <report Text="Backorders" Value="" NavigateUrl="#" ToolTip="" />
+  </department>
+  <department Text="Human Resources">
+    <report Text="Employees" Value="" NavigateUrl="#" ToolTip="" />
+  </department>
+</reports>

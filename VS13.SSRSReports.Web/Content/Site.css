@@ -1,0 +1,113 @@
+﻿/*
+#F2EFE4     grey
+#EBD699     light brown
+#CB8C1D     medium brown
+#4C3327     dark brown
+#BD3632     red
+*/
+body {
+ 	font-family: Calibri, sans-serif;
+	color: #000000;
+    background-color: #F2EFE4;
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #EBD699;
+}
+
+/* Navbar Title */
+.navbar-inverse .navbar-brand {
+    color: #BD3632;
+}
+.navbar-inverse .navbar-brand:hover, 
+.navbar-inverse .navbar-brand:focus {
+    color: #FFFFFF;
+}
+
+/* Navbar Menu */
+.navbar-inverse .navbar-nav > .active > a, 
+.navbar-inverse .navbar-nav > .active > a:hover, 
+.navbar-inverse .navbar-nav > .active > a:focus {
+    color: #FFFFFF;
+    background-color: #4C3327;
+}
+.navbar-inverse .navbar-nav > li > a {
+    color: #4C3327;
+}
+
+/* Navbar Icon Menu */
+.navbar-inverse .navbar-toggle:hover, 
+.navbar-inverse .navbar-toggle:focus {
+    background-color: #CB8C1D;
+}
+
+.template {
+	padding: 40px 15px; text-align: center;
+}
+
+.footer { 
+    position:absolute;
+    bottom:0px;
+    margin-left: 25px;
+    height:50px;
+    background-color: #F2EFE4;
+    color: #4C3327;
+}
+.container .text-muted {
+	margin: 5px 0px;
+    color: #FFFFFF;
+}
+
+.reporttitle {
+    padding: 10px 0px 0px 25px;
+    font-size: 20px;
+    font-style:italic;
+}
+.treeview {
+    width: 300px;
+    margin: 0px 0px;
+    white-space:nowrap;
+}
+.treeviewtitle {
+    width: 285px;
+    height: 25px;
+    margin: 5px 5px 5px 0px;
+    padding:2px 0px 0px 10px;
+    background-color: #EBD699;
+    color: #BD3632;
+}
+.reportview {
+}
+.toolbar {
+    margin: 0px 0px 25px 0px;
+}
+.toolbarbutton {
+    width:100px;
+    height: 25px;
+    margin: 5px 10px;
+    border-style: outset;
+    border-width:1px;
+    border-color:#F2EFE4;
+    color: #4C3327;
+}
+.report {
+    margin: 25px 0px 25px 0px;
+}
+
+@media screen and (min-width: 768px) {
+    .body-content {
+        padding: 0;
+    }
+}
+
+input,
+select,
+option {
+}

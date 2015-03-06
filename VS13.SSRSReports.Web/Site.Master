@@ -1,0 +1,95 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="VS13.Reports.SiteMaster" %>
+<%@ Register Assembly="Microsoft.ReportViewer.WebForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=B03F5F7F11D50A3A" Namespace="Microsoft.Reporting.WebForms" TagPrefix="rsweb" %>
+<!DOCTYPE html>
+
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%: Page.Title %></title>
+    <asp:PlaceHolder runat="server"><%: Scripts.Render("~/bundles/modernizr") %></asp:PlaceHolder>
+    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body>
+    <form runat="server">
+        <asp:ScriptManager runat="server">
+            <Scripts>
+                <%--To learn more about bundling scripts in ScriptManager see http://go.microsoft.com/fwlink/?LinkID=301884 --%>
+                <%--Framework Scripts--%>
+                <asp:ScriptReference Name="MsAjaxBundle" />
+                <asp:ScriptReference Name="jquery" />
+                <asp:ScriptReference Name="bootstrap" />
+                <asp:ScriptReference Name="respond" />
+                <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
+                <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
+                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+                <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
+                <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
+                <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
+                <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
+                <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
+                <asp:ScriptReference Name="WebFormsBundle" />
+                <%--Site Scripts--%>
+            </Scripts>
+        </asp:ScriptManager>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" runat="server" href="~/">SSRSReports</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a runat="server" href="~/About">About</a></li>
+                    </ul>
+                    <p class="nav navbar-text navbar-right">Hello, <asp:LoginName runat="server" />!</p>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid body-content">
+            <div class="row"><div class="col-md-12 reporttitle"><asp:Label ID="lblReportTitle" runat="server" Text="SSRS Reports" /></div></div>
+            <div class="row">
+                <div class="col-md-3 treeview">
+                    <div class="treeviewtitle">SQL Server Reporting Services</div>
+                    <asp:TreeView ID="trvMain" runat="server" Width="100%" DataSourceID="xmlRpts" ImageSet="Simple" ForeColor="#4C3327" Target="_self" PopulateNodesFromClient="False" EnableTheming="True" ExpandDepth="1" OnTreeNodeDataBound="OnTreeNodeDataBound" >
+                        <NodeStyle NodeSpacing="2px" />
+                        <HoverNodeStyle Font-Underline="True" />
+                        <SelectedNodeStyle BackColor="#CB8C1D" ForeColor="#ffffff" />
+                        <DataBindings>
+                            <asp:TreeNodeBinding DataMember="reports" TextField="Text" SelectAction="Expand" />
+                            <asp:TreeNodeBinding DataMember="department" TextField="Text" SelectAction="Expand" />
+                            <asp:TreeNodeBinding DataMember="report" TextField="Text" ValueField="Value" NavigateUrlField="NavigateUrl" ToolTipField="ToolTip" />
+                        </DataBindings>
+                    </asp:TreeView>
+                    <asp:XmlDataSource ID="xmlRpts" runat="server" DataFile="~/App_Data/Reports.xml" EnableCaching="true" CacheExpirationPolicy="Absolute" CacheDuration="Infinite" />
+                </div>
+                <div class="col-md-9 reportview">
+                    <div class="toolbar">
+                        <asp:Button ID="btnSetup" runat="server" CssClass="toolbarbutton" Text="Setup" ToolTip="Setup the report parameters" CommandName="Setup" OnCommand="OnButtonCommand" />
+                        <asp:Button ID="btnRun" runat="server" CssClass="toolbarbutton" Text="Run" Enabled="false" ToolTip="Run the report" CommandName="Run" OnCommand="OnButtonCommand" />
+                    </div>
+                    <div class="report">
+                        <asp:MultiView ID="mvMain" runat="server" ActiveViewIndex="0">
+                            <asp:View ID="vwSetup" runat="server">
+                                <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+                            </asp:View>
+                            <asp:View ID="vwReport" runat="server">
+                                <rsweb:reportviewer id="rsViewer" runat="server" Height="100%" Width="100%" BorderStyle="None" BorderWidth="0px" BackColor="White" ProcessingMode="Local" AsyncRendering="True" KeepSessionAlive="true" ExportContentDisposition="OnlyHtmlInline" ShowFindControls="false" ShowPrintButton="true" ZoomMode="Percent" ZoomPercent="100" />
+                            </asp:View>
+                        </asp:MultiView>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <footer class="footer"><p>&copy; <%: DateTime.Now.Year %> jpHeary</p></footer>
+            </div>
+       </div>
+    <asp:XmlDataSource ID="xmlConfig" runat="server" DataFile="~/App_Data/Configuration.xml" EnableCaching="true" CacheExpirationPolicy="Absolute" CacheDuration="Infinite" />
+    </form>
+</body>
+</html>

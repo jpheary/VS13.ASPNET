@@ -1,0 +1,67 @@
+﻿/* 
+#6491A1     Blue
+#385A72     Dark Blue
+#003455     Darker Blue
+#A10518     Red
+#212121     Black
+#404040     Black
+#D8D8D8     Grey
+
+*/
+html {
+	position: relative; min-height: 100%;
+}
+
+body {
+    font-family: Calibri, Arial, sans-serif;
+	padding-top: 50px;
+	margin-bottom: 30px;
+    background-color: #D8D8D8;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #6491A1;
+}
+
+/* Navbar Title */
+.navbar-inverse .navbar-brand {
+    color: #A10518;
+}
+.navbar-inverse .navbar-brand:hover, 
+.navbar-inverse .navbar-brand:focus {
+    color: #FFFFFF;
+}
+
+/* Navbar Menu */
+.navbar-inverse .navbar-nav > .active > a, 
+.navbar-inverse .navbar-nav > .active > a:hover, 
+.navbar-inverse .navbar-nav > .active > a:focus {
+    color: #FFFFFF;
+    background-color: #385A72;
+}
+.navbar-inverse .navbar-nav > li > a {
+    color: #212121;
+}
+
+/* Navbar Icon Menu */
+.navbar-inverse .navbar-toggle:hover, 
+.navbar-inverse .navbar-toggle:focus {
+    background-color: #385A72;
+}
+
+.template {
+	padding: 40px 15px; text-align: center;
+}
+
+.footer {
+	width: 100%; 
+    height: 30px; 
+    bottom: 0px; 
+    position: absolute; 
+    background-color: #003455;
+}
+.container .text-muted {
+	margin: 5px 0px;
+    color: #FFFFFF;
+}
