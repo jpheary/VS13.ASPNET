@@ -3,11 +3,11 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("VS13.CustomModules.Web")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyDescription("Exploring IIS 7.5 Custom Modules")]
+[assembly: AssemblyConfiguration("Updated 03/06/15, jph")]
+[assembly: AssemblyCompany("jpHear")]
 [assembly: AssemblyProduct("CustomModules")]
-[assembly: AssemblyCopyright("Copyright ©jpHeary  2015")]
+[assembly: AssemblyCopyright("Copyright jpHeary 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

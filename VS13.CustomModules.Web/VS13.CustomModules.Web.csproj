@@ -160,6 +160,7 @@
   <ItemGroup>
     <Content Include="App_Code\HelloWorldModule.cs" />
     <Content Include="App_Code\BasicAuthenticationModule.cs" />
+    <Content Include="App_Code\MobileRouter.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="About.aspx.cs">
       <DependentUpon>About.aspx</DependentUpon>
