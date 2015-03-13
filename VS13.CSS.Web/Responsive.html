@@ -3,6 +3,7 @@
 <head>
   <!-- Tell mobile devices to display this page at device width and allow user to zoom (i.e. pinch) -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>Responsice Design</title>
   <style>
     body { font-family: "Lucida Sans", Verdana, sans-serif;  }
 
@@ -25,7 +26,7 @@
     .gridmain {
       width: 48%;
     }
-    .gridright {
+    .gridsidebar {
       width: 23%;
       margin-right: 0;
     }
@@ -44,7 +45,7 @@
       .gridmain {
         width: 100%;
       }
-      .gridright {
+      .gridsidebar {
         width: 100%;
       }
     }
@@ -69,7 +70,7 @@
     .main img {
       width: 100%;
     }
-    .right {
+    .sidebar {
       padding: 4.0%;
       background-color: #CDF0F6;
     }
@@ -88,7 +89,7 @@
       .main {
         padding: 1.0%;
       }
-      .right {
+      .sidebar {
         padding: 1.0%;
       }
     }
@@ -104,31 +105,31 @@
       </div>
     </div>
     <div class="gridbox gridmenu">
-      <div class="menuitem">Menu Cell Item 1</div>
-      <div class="menuitem">Menu Cell Item 2</div>
-      <div class="menuitem">Menu Cell Item 3</div>
-      <div class="menuitem">Menu Cell Item 4</div>
+      <div class="menuitem"><a href="#">Menu Cell 1</a></div>
+      <div class="menuitem"><a href="#">Menu Cell 2</a></div>
+      <div class="menuitem"><a href="#">Menu Cell 3</a></div>
+      <div class="menuitem"><a href="#">Menu Cell 4</a></div>
     </div>
     <div class="gridbox gridmain">
       <div class="main">
-        <h1>Main Cell</h1>
-        <p>This is where main content goes.</p>
-        <img src="../images/picture.jpg" alt="Can't find the image" width="" height="">
+        <h1>Main Cell 1</h1>
+        <p>Main content for Menu Cell 1</p>
+        <img src="../images/picture.jpg" alt="Can't find the image" width="0px">
       </div>
     </div>
-    <div class="gridbox gridright">
-      <div class="right">
-        <h2>Right 1</h2>
-        <p>On the right.</p>
-        <h2>Right 2</h2>
-        <p>The grid cell on the right side of the page.</p>
-        <h2>Right 3</h2>
-        <p>The grid cell floats left for all widths.</p>
+    <div class="gridbox gridsidebar">
+      <div class="sidebar">
+        <h2>Sidebar Cell 1</h2>
+        <p>...</p>
+        <h2>Sidebar Cell 2</h2>
+        <p>...</p>
+        <h2>Sidebar Cell 3</h2>
+        <p>...</p>
       </div>
     </div>
     <div class="gridbox gridfooter">
       <div class="footer">
-        <p>The footer cell on the bottom of the page.</p>
+        <p>Footer Cell</p>
       </div>
     </div>
   </div>
