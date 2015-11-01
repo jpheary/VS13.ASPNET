@@ -7,6 +7,23 @@ using System.Web;
 
 namespace VS13.Models {
     //
+    public class FromToDates {
+        //Members
+        [DataType(DataType.Date)]
+        [Display(Name = "From Date")]
+        public DateTime FromDate { get; set; }
+        [DataType(DataType.Date)]
+        [Display(Name = "To Date")]
+        public DateTime ToDate { get; set; }
+
+        //Interface
+        public FromToDates() {
+            //Constructor
+            FromDate = DateTime.Today;
+            ToDate = DateTime.Today;
+        }
+    }
+
     public class Shipment {
         //Members
         [DataType(DataType.Date)]

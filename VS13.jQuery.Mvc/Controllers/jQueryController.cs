@@ -4,11 +4,19 @@ using VS13.Models;
 namespace VS13.Controllers {
     public class jQueryController:Controller {
         // GET: jQuery
-        public ActionResult Index() { return View(new Shipment()); }
+        public ActionResult Index() { return View(); }
+        public ActionResult Calendar() { return View(new FromToDates()); }        
+        public ActionResult Spinner() { return View(); }
+        public ActionResult TabsH() { return View(); }
+        public ActionResult TabsV() { return View(); }
+        public ActionResult TimeSpinner() { return View(); }
+
+
+        public ActionResult Shipment() { return View(new Shipment()); }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index([Bind(Include = "ShipDate")] Shipment shipment) {
+        public ActionResult Shipment([Bind(Include = "ShipDate")] Shipment shipment) {
             // To protect from overposting attacks, please enable the specific properties you want to bind to, for more details see http://go.microsoft.com/fwlink/?LinkId=317598.
            if (ModelState.IsValid) {
                 //

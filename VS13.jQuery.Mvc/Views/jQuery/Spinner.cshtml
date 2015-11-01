@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "Spinner";
+}
+@section scripts {
+    <script type="text/jscript">
+        $.widget("ui.timespinner", $.ui.spinner, {
+            options: { step: 60000, page: 60 },
+            _parse: function (value) {
+                if (typeof value === "string") {
+                    if (Number(value) == value) {
+                        return Number(value);
+                    }
+                    return +Globalize.parseDate(value);
+                }
+                return value;
+            },
+            _format: function (value) {
+                return Globalize.format(new Date(value), "t");
+            }
+        });
+        $(document).ready(function () {
+            $("#txtWeight").spinner({ min: 0, max: 1500 });
+            $("#txtInsurance").spinner({ min: 0, max: 1000, numberFormat: "C", stop: function (event, ui) { reset(); } });
+        });
+        function isNumeric(control) {
+            var val = document.getElementById(control.id).value.replace("$", "");
+            if (!$.isNumeric(val)) {
+                document.getElementById(control.id).value = '0';
+                document.getElementById(control.id).focus();
+                alert("Numeric values only.");
+            }
+        }
+        function reset() {
+            $("#txtWeight").spinner("value", 0);
+        }
+    </script>
+}
+
+<div class="spinner">
+    <div class="subtitle">jQuery Integer Spinner</div>
+    <p>A simple integer spinner: min=0, max=1500</p>
+    <label for="txtWeight">Weight</label>@Html.TextBox("txtWeight","0",new { @maxlength = "4",@onchange = "javascript: isNumeric(this);" })
+</div>
+<hr />
+<div class="spinner">
+    <div class="subtitle">jQuery Currency Spinner</div>
+    <p>A simple currrency spinner: min=$0, max=$1000</p>
+    <label for="txtInsurance">Insurance</label>@Html.TextBox("txtInsurance","0.00",new { @onchange = "javascript: isNumeric(this);" })
+</div>

@@ -1,0 +1,78 @@
+﻿body {
+    margin: 0px;
+    padding: 50px 0px 20px 0px;
+	font-family: Calibri, Arial, sans-serif;
+	font-size: 1.0em;
+	color: #000000;
+}
+
+.body-content {
+    padding: 0px 15px;
+}
+@media screen and (min-width: 768px) {
+    .body-content {
+        padding: 0px;
+    }
+}
+
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.subtitle {
+    margin: 50px 0px 20px 0px;
+    font-size: 2.0em;
+}
+
+.calendar {
+    margin: 5px 5px;
+}
+.calendar p {
+    font-style:italic;
+}
+.calendar label {
+    display: inline-block;
+    width: 100px;
+    padding-right: 5px;
+    text-align: right;
+    font-weight: bold;
+}
+.calendar input[type="text"] {
+    width: 100px;
+}
+
+.spinner {
+    margin: 5px 5px;
+}
+.spinner p {
+    font-style:italic;
+}
+.spinner label {
+    display: inline-block;
+    width: 100px;
+    padding-right: 5px;
+    text-align: right;
+    font-weight: bold;
+}
+.spinner input[type="text"] {
+    width: 75px;
+}
+
+.timespinner {
+    margin: 5px 5px;
+}
+.timespinner p {
+    font-style:italic;
+}
+.timespinner label {
+    display: inline-block;
+    width: 100px;
+    padding-right: 5px;
+    text-align: right;
+    font-weight: bold;
+}
+.timespinner input[type="text"] {
+    width: 75px;
+}

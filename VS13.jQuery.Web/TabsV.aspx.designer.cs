@@ -10,6 +10,6 @@
 namespace VS13 {
     
     
-    public partial class About {
+    public partial class TabsV {
     }
 }

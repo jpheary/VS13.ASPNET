@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = "TimeSpinner";
+}
+@section scripts {
+    <script type="text/jscript">
+        $.widget("ui.timespinner", $.ui.spinner, {
+            options: { step: 60000, page: 60 },
+            _parse: function (value) {
+                if (typeof value === "string") {
+                    if (Number(value) == value) {
+                        return Number(value);
+                    }
+                    return +Globalize.parseDate(value);
+                }
+                return value;
+            },
+            _format: function (value) {
+                return Globalize.format(new Date(value), "t");
+            }
+        });
+        $(document).ready(function () {
+            $("#spinner").timespinner();
+
+            $("#txtFrom").timespinner({
+                change: function (event, ui) {
+                    var f = $("#txtFrom").timespinner("value");
+                    var t = $("#txtTo").timespinner("value");
+                    if (f > t) {
+                        $("#txtFrom").timespinner("value", t);
+                        alert("From cannot be after To.");
+                    }
+                }
+            });
+            $("#txtTo").timespinner({
+                change: function (event, ui) {
+                    var f = $("#txtFrom").timespinner("value");
+                    var t = $("#txtTo").timespinner("value");
+                    if (t < f) {
+                        $("#txtTo").timespinner("value", f);
+                        alert("To cannot be before From.");
+                    }
+                }
+            });
+        });
+    </script>
+}
+<div class="timespinner">
+    <div class="subtitle">jQuery Time Spinner</div>
+    <p>A simple time spinner.</p>
+    <label for="spinner">Time&nbsp;</label>
+    <input id="spinner" type="text" name="spinner" value="08:30 PM">
+</div>
+<hr />
+<div class="timespinner">
+    <div class="subtitle">jQuery Time Window Spinner</div>
+    <p>A simple time window spinner.</p>
+    <label for="txtFrom">Window&nbsp;</label>
+    @Html.TextBox("txtFrom")
+    &nbsp;-&nbsp;
+    @Html.TextBox("txtTo")
+    <br /><br />
+    <table>
+        <tr><td>The selected time window is:&nbsp;</td><td>&nbsp;</td></tr>
+    </table>
+</div>
