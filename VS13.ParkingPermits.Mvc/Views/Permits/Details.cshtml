@@ -1,0 +1,82 @@
+﻿@{
+    ViewBag.Title = "Details";
+}
+@model VS13.Models.ParkingPermit
+
+<div>
+    <div class="permit">
+        <div class="subtitle">Parking Permit#&nbsp;@Model.Number</div>
+        <div>
+            <fieldset>
+                <legend>Vehicle</legend>
+                @Html.DisplayNameFor(model => model.Vehicle.PlateNumber)@Model.Vehicle.PlateNumber<br />
+                <label for="lblMake">Make</label>@Model.Vehicle.Year&nbsp;@Model.Vehicle.Make&nbsp;@Model.Vehicle.Model&nbsp;(@Model.Vehicle.Color)<br />
+                <br />
+            </fieldset>
+            <fieldset>
+                <legend>Contact</legend>
+                <label for="lblName">Name</label>@Model.Vehicle.ContactFirstName&nbsp;@Model.Vehicle.ContactMiddleName&nbsp;@Model.Vehicle.ContactLastName<br />
+                <label for="lblPhone">Phone</label>@Model.Vehicle.ContactPhoneNumber<br />
+                <br />
+            </fieldset>
+        </div>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Vehicle.IssueState)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Vehicle.IssueState)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Number)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Number)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Activated)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Activated)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ActivatedBy)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ActivatedBy)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Inactivated)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Inactivated)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.InactivatedBy)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.InactivatedBy)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.InactivatedReason)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.InactivatedReason)
+            </dd>
+
+        </dl>
+    </div>
+</div>

@@ -1,0 +1,80 @@
+﻿@model VS13.Models.ParkingPermit
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>ParkingPermit</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Vehicle.IssueState)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Vehicle.IssueState)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Number)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Number)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Activated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Activated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ActivatedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ActivatedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Inactivated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Inactivated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.InactivatedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InactivatedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.InactivatedReason)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InactivatedReason)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
