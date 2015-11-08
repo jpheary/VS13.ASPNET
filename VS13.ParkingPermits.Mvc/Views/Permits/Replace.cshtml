@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "Replace permit";
+}
+@model VS13.Models.ParkingPermit
+
+<h2>Replace Permit</h2>
+<p>Replace a lost, stolen, or damaged parking permit.</p>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal permit">
+        @Html.ValidationSummary(true,"",new { @class = "text-danger" })
+        <div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Number,htmlAttributes :new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Number,new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Number,"",new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.InactivatedReason,htmlAttributes :new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.InactivatedReason,new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.InactivatedReason,"",new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div>
+            <fieldset>
+                <legend>Vehicle</legend>
+                <dl class="dl-horizontal">
+                    <dt>@Html.DisplayNameFor(model => model.Vehicle.PlateNumber)</dt>
+                    <dd>@Html.DisplayFor(model => model.Vehicle.PlateNumber)</dd>
+                    <dt>@Html.DisplayNameFor(model => model.Vehicle.Make)</dt>
+                    <dd>@Html.DisplayFor(model => model.Vehicle.Year)&nbsp;@Html.DisplayFor(model => model.Vehicle.Make)&nbsp;@Html.DisplayFor(model => model.Vehicle.Model)&nbsp;(@Html.DisplayFor(model => model.Vehicle.Color))</dd>
+                </dl>
+            </fieldset>
+            <fieldset>
+                <legend>Contact</legend>
+                <dl class="dl-horizontal">
+                    <dt>Name</dt>
+                    <dd>@Html.DisplayFor(model => model.Vehicle.ContactFirstName)&nbsp;@Html.DisplayFor(model => model.Vehicle.ContactMiddleName)&nbsp;@Html.DisplayFor(model => model.Vehicle.ContactLastName)</dd>
+                    <dt>@Html.DisplayNameFor(model => model.Vehicle.ContactPhoneNumber)</dt>
+                    <dd>@Html.DisplayFor(model => model.Vehicle.ContactPhoneNumber)</dd>
+                </dl>
+            </fieldset>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" id="ok" value="Replace" class="btn btn-default" />
+                    <input type="button" id="cancel" value="Cancel" class="btn btn-default" onclick="location.href='@Url.Action("Index")'" />
+                </div>
+            </div>
+        </div>
+    </div>
+}

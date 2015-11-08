@@ -11,134 +11,6 @@
     padding-right: 15px;
 }
 
-.title {
-    float: left;
-    margin: 5px 0px;
-    padding: 5px 0px 0px 5px;
-	color: #ee2a24;
-	font-family: Michroma;
-    font-size: 20px;
-    font-weight: 400;
-    text-align: left;
-}
-.subtitle {
-    margin: 25px 0px 10px 0px;
-    padding: 0px 0px 0px 5px;
-	color: #c5c7c9;
-    font-size: 1.3em;
-    font-weight: 600;
-    text-align: left;
-}
-.footer {
-	margin-top: 5px;
-	text-align: center;
-    vertical-align: middle;
-}
-
-.permits {
-    width: 100%;
-    margin: 0px;
-}
-.permits p {
-    margin: 10px 30px;
-}
-.permits fieldset {
-    width: 100%;
-    margin: 20px auto;
-    padding: 10px 5px 5px 0px;
-}
-.permits fieldset legend {
-    margin: 0px 0px 10px 0px;
-    padding: 0px 5px;
-    color: #c5c7c9;
-}
-.permits label {
-    display: inline-block;
-    width: 50px;
-    padding: 5px 5px 0px 0px;
-    text-align: right;
-    vertical-align: top;
-    font-weight: bold;
-}
-.permits input[type="text"] {
-    margin: 2px 0px;
-}
-.permits select {
-    margin: 2px 0px;
-}
-
-.permit {
-    width: 600px;
-    margin: 0px auto;
-}
-.permit p {
-    margin: 10px 30px;
-}
-.permit fieldset {
-    margin: 20px auto;
-    padding: 10px 5px 5px 0px;
-}
-.permit fieldset legend {
-    margin: 0px 0px 10px 0px;
-    padding: 0px 5px;
-    color: #c5c7c9;
-}
-.permit label {
-    display: inline-block;
-    width: 100px;
-    padding: 3px 5px 0px 0px;
-    text-align: right;
-    vertical-align: top;
-    font-weight: bold;
-}
-.permit fieldset span {
-    margin: 2px 0px;
-    padding: 0px 0px 0px 5px;
-    border-bottom: 1px solid #c5c7c9;
-}
-.permit input[type="text"] {
-    margin: 2px 0px;
-}
-.permit select {
-    margin: 2px 0px;
-}
-
-.permitprefix {
-    display: inline-block;
-    width: 25px;
-    height: 16px;
-    margin: 0px;
-    padding: 2px 0px 1px 0px;
-    border: 1px solid #c5c7c9;
-    font-size: 1.0em;
-    text-align: center;
-    color: #ee2a24;
-}
-.permitprefixr {
-    display: inline-block;
-    width: 25px;
-    height: 16px;
-    margin: 0px;
-    padding: 2px 0px 1px 0px;
-    border: 1px solid #c5c7c9;
-    font-size: 1.0em;
-    font-weight:bold;
-    text-align: center;
-    color: #ee2a24;
-}
-.permitprefixb {
-    display: inline-block;
-    width: 25px;
-    height: 16px;
-    margin: 0px;
-    padding: 2px 0px 1px 0px;
-    border: 1px solid #c5c7c9;
-    font-size: 1.0em;
-    font-weight:bold;
-    text-align: center;
-    color: blue;
-}
-
 .gridviewtitle {
     height:18px;
     margin: 3px 0px;
@@ -154,7 +26,6 @@
     float:right;
 }
 .gridviewbody {
-    height: 350px;
     margin:0px;
     padding:0px;
     border-bottom: 1px solid #c5c7c9;
@@ -168,24 +39,6 @@
 	text-align: center;
 }
 .gridviewbody a:hover { color: #ee2a24; }
-
-.services {
-    margin: 25px 0px;
-    padding: 0px 50px;
-    text-align:right;
-}
-
-.popupLink {
-    color: #ee2a24;
-    text-decoration: none;
-	text-align: left;
-}
-
-.bold { font-weight: bold; }
-.clear { clear: both;  }
-.clearleft { clear: left;  }
-.clearright { clear: right;  }
-
 
 .dl-horizontal dt {
     white-space: normal;

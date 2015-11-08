@@ -118,6 +118,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ModelsController.cs" />
     <Compile Include="Controllers\PermitsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -132,6 +133,14 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Images\animated-overlay.gif" />
+    <Content Include="Content\Images\changevehicle.png" />
+    <Content Include="Content\Images\context.png" />
+    <Content Include="Content\Images\findpermit.png" />
+    <Content Include="Content\Images\keyabstractions.png" />
+    <Content Include="Content\Images\registervehicle.png" />
+    <Content Include="Content\Images\replacepermit.png" />
+    <Content Include="Content\Images\revokepermit.png" />
+    <Content Include="Content\Images\states.png" />
     <Content Include="Content\Images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\Images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\Images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -145,6 +154,7 @@
     <Content Include="Content\Images\ui-icons_454545_256x240.png" />
     <Content Include="Content\Images\ui-icons_888888_256x240.png" />
     <Content Include="Content\Images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\Images\usecases.png" />
     <Content Include="Content\jquery-ui-blitzer.css" />
     <Content Include="Content\jquery-ui-smoothness.css" />
     <Content Include="favicon.ico" />
@@ -189,6 +199,14 @@
     <Content Include="Views\Permits\Details.cshtml" />
     <Content Include="Views\Permits\Edit.cshtml" />
     <Content Include="Views\Permits\Index.cshtml" />
+    <Content Include="Views\Models\Context.cshtml" />
+    <Content Include="Views\Models\Activities.cshtml" />
+    <Content Include="Views\Models\UseCases.cshtml" />
+    <Content Include="Views\Models\KeyAbstractions.cshtml" />
+    <Content Include="Views\Models\States.cshtml" />
+    <Content Include="Views\Permits\Replace.cshtml" />
+    <Content Include="Views\Permits\Revoke.cshtml" />
+    <Content Include="Views\Permits\Change.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

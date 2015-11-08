@@ -3,17 +3,21 @@
 }
 @model IEnumerable<VS13.Models.ParkingPermit>
 
-<div class="subtitle">Parking Permits</div>
+<h2>Parking Permits</h2>
 <div id="tabs">
     <ul>
         <li><a href="#tabPermits">Permits</a></li>
         <li><a href="#tabSearch">Search</a></li>
     </ul>
     <div id="tabPermits">
+        <p>@Html.ActionLink("Register","Register")</p>
         <div class="gridviewtitle">All Parking Permits</div>
         <div class="gridviewbody">
             <table class="table">
                 <tr>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
                     <th>@Html.DisplayNameFor(model => model.Number)</th>
                     <th>@Html.DisplayNameFor(model => model.Vehicle.IssueState)</th>
                     <th>@Html.DisplayNameFor(model => model.Vehicle.PlateNumber)</th>
@@ -26,15 +30,17 @@
                     <th>@Html.DisplayNameFor(model => model.Vehicle.ContactLastName)</th>
                     <th>@Html.DisplayNameFor(model => model.Vehicle.ContactPhoneNumber)</th>
                     <th>@Html.DisplayNameFor(model => model.Activated)</th>
-                    <th> @Html.DisplayNameFor(model => model.ActivatedBy)</th>
+                    <th>@Html.DisplayNameFor(model => model.ActivatedBy)</th>
                     <th>@Html.DisplayNameFor(model => model.Inactivated)</th>
                     <th>@Html.DisplayNameFor(model => model.InactivatedBy)</th>
                     <th>@Html.DisplayNameFor(model => model.InactivatedReason)</th>
-                    <th></th>
                 </tr>
                 @foreach (var item in Model) {
                     <tr>
-                        <td>@Html.ActionLink(item.Number,"Details",new { id = item.ParkingPermitID },new { id = "linkId", title = "Click here to view this permit." })</td>
+                        <td>@Html.ActionLink("Replace","Replace",new { id = item.ParkingPermitID })</td>
+                        <td>@Html.ActionLink("Revoke","Revoke",new { id = item.ParkingPermitID })</td>
+                        <td>@Html.ActionLink("Change Vehicle","Change",new { id = item.ParkingPermitID })</td>
+                        <td>@Html.ActionLink(item.Number,"Details",new { id = item.ParkingPermitID },new { id = "linkId",title = "Click here to view this permit." })</td>
                         <td>@Html.DisplayFor(modelItem => item.Vehicle.IssueState)</td>
                         <td>@Html.DisplayFor(modelItem => item.Vehicle.PlateNumber)</td>
                         <td>@Html.DisplayFor(modelItem => item.Vehicle.Year)</td>
@@ -50,18 +56,9 @@
                         <td>@Html.DisplayFor(modelItem => item.Inactivated)</td>
                         <td>@Html.DisplayFor(modelItem => item.InactivatedBy)</td>
                         <td>@Html.DisplayFor(modelItem => item.InactivatedReason)</td>
-                        <td>
-                            @Html.ActionLink("Edit","Edit",new { id = item.ParkingPermitID }) | @Html.ActionLink("Delete","Delete",new { id = item.ParkingPermitID })
-                        </td>
                     </tr>
                 }
             </table>
-        </div>
-        <div class="services">
-            <input type="button" id="register" value="Register" class="btn btn-default" onclick="location.href='@Url.Action("Register")'" />
-            <input type="button" id="replace" value="Replace" class="btn btn-default" />
-            <input type="button" id="revoke" value="Revoke" class="btn btn-default" />
-            <input type="button" id="change" value="Change Vehicle" class="btn btn-default" />
         </div>
     </div>
     <div id="tabSearch">
@@ -73,10 +70,6 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#tabs").tabs({ active: 0 });
-        $("#register").button();
-        $("#replace").button();
-        $("#revoke").button();
-        $("#change").button();
 
         $('#linkId').click(function () {
             //$.get(this.href, function (result) {

@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Parking Permits @ViewBag.Title</title>
     @Scripts.Render("~/bundles/modernizr")
@@ -22,19 +23,18 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Permits","Index","Permits")</li>
-                    <li>@Html.ActionLink("About","About","Home")</li>
-                    <li>@Html.ActionLink("Contact","Contact","Home")</li>
                     <li>
                     <li class="dropdown-toggle">
-                        <a href="#" class="dropdown-toggle" id="modelsmenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Models<span class="caret"></span>
-                        </a>
+                        <a href="#" id="modelsmenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Models<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Context</a></li>
-                            <li><a href="#">Use Cases</a></li>
-                            <li><a href="#">Key Abstractions</a></li>
+                            <li>@Html.ActionLink("Context","Context","Models")</li>
+                            <li>@Html.ActionLink("Activities","Activities","Models")</li>
+                            <li>@Html.ActionLink("Use Cases","UseCases","Models")</li>
+                            <li>@Html.ActionLink("Key Abstractions","KeyAbstractions","Models")</li>
+                            <li>@Html.ActionLink("States","States","Models")</li>
                         </ul>
                     </li>
+                    <li>@Html.ActionLink("About","About","Home")</li>
                 </ul>
             </div>
         </div>

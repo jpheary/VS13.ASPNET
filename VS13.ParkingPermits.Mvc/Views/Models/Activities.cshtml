@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "Activities";
+}
+
+<h2>Activities</h2>
+<p>The following diagrams show the business activities for the system. Business activities are modeled 
+    using activity diagrams. Activity diagrams show a series of activities, the actors responsible for each 
+    activity, and the information consumed and created during the process. These diagrams use the language 
+    of the business. Activity diagrams drive the discovery of Actors, Use Cases, and Key Abstractions.
+</p>
+<br />
+<div id="tabs">
+    <ul>
+        <li><a href="#register">Register Vehicle</a></li>
+        <li><a href="#replace">Replace Permit</a></li>
+        <li><a href="#revoke">Revoke Permit</a></li>
+        <li><a href="#change">Change Vehicle</a></li>
+        <li><a href="#find">Find Permit</a></li>
+    </ul>
+    <div id="register">
+        <img src="~/Content/Images/registervehicle.png" />
+    </div>
+    <div id="replace">
+        <img src="~/Content/Images/replacepermit.png" />
+    </div>
+    <div id="revoke">
+        <img src="~/Content/Images/revokepermit.png" />
+    </div>
+    <div id="change">
+        <img src="~/Content/Images/changevehicle.png" />
+    </div>
+    <div id="find">
+        <img src="~/Content/Images/findpermit.png" />
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $("#tabs").tabs({ active: 0 });
+    });
+    </script>
+}
