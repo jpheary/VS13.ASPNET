@@ -113,6 +113,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\jQueryController.cs" />
+    <Compile Include="Controllers\jQueryUIController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -175,13 +176,18 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-    <Content Include="Views\jQuery\Calendar.cshtml" />
+    <Content Include="Views\jQueryUI\Calendar.cshtml" />
+    <Content Include="Views\jQueryUI\Index.cshtml" />
+    <Content Include="Views\jQueryUI\Shipment.cshtml" />
+    <Content Include="Views\jQueryUI\Spinner.cshtml" />
+    <Content Include="Views\jQueryUI\TabsH.cshtml" />
+    <Content Include="Views\jQueryUI\TabsV.cshtml" />
+    <Content Include="Views\jQueryUI\TimeSpinner.cshtml" />
     <Content Include="Views\jQuery\Index.cshtml" />
-    <Content Include="Views\jQuery\Shipment.cshtml" />
-    <Content Include="Views\jQuery\Spinner.cshtml" />
-    <Content Include="Views\jQuery\TabsH.cshtml" />
-    <Content Include="Views\jQuery\TabsV.cshtml" />
-    <Content Include="Views\jQuery\TimeSpinner.cshtml" />
+    <Content Include="Views\jQuery\FocusInputOnLoad.cshtml" />
+    <Content Include="Views\jQuery\ChangeFormElementState.cshtml" />
+    <Content Include="Views\jQuery\AutoSelectRadioButtons.cshtml" />
+    <Content Include="Views\jQuery\ToggleAllCheckboxes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

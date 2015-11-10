@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = "ToggleAllCheckboxes";
+}
+
+<h4>Toggle All Checkboxes</h4>
+<p>
+    Provide a toggle to select/deselect a group of checkboxes
+    TODO: Toggle only works once; checkbox change not working
+</p>
+<div>
+    <fieldset>
+        <legend>Select all that apply</legend>
+        @Html.CheckBox("toggleall",false,new { @class = "toggle" })
+        @Html.Label("toggleall","Select All")
+        <br /><br />
+        @Html.CheckBox("wokeup",false)
+        @Html.Label("wokeup","I woke up")
+        <br />
+        @Html.CheckBox("health",false)
+        @Html.Label("health","My health")
+        <br />
+        @Html.CheckBox("family",false)
+        @Html.Label("family","My family")
+        <br />
+        @Html.CheckBox("sunshine",false)
+        @Html.Label("sunshine","The sun is shining")
+    </fieldset>
+</div>
+
+@section scripts {
+    <script type="text/jscript">
+        $(function () {
+            //Find the toggle checkbox
+            $('fieldset .toggle:checkbox').each(function () {
+                //Reference objects
+                var $toggle = $(this);
+                var $checkboxes = $toggle.siblings('input:checkbox');
+
+                //Listen for change event on toggle
+                $toggle.change(function () {
+                    if (this.checked) {
+                        $checkboxes.attr('checked', 'checked');
+                    }
+                    else {
+                        $checkboxes.removeAttr('checked');
+                    }
+                });
+
+                //Listen for the change event on each checkbox
+                $checkboxes.change(function () {
+                    if (this.checked) {
+                        //If this is checked and all others are checked then check the toggle
+                        if ($checkboxes.filter(':checked').length == $checkboxes.length) {
+                            $toggle.attr('checked', 'checked');
+                        }
+                    }
+                    else {
+                        //Otherwise deselect the toggle
+                        $toggle.removeAttr('checked');
+                    }
+                }).eq(0).trigger('change'); //Trigger change on first checkbox to set the shared toggle state
+            });
+        });
+    </script>
+}

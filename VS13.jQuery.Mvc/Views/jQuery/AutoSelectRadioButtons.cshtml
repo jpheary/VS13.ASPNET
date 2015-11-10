@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = "AutoSelectRadioButtons";
+}
+
+<h4>Auto Select Radio Buttons</h4>
+<p>
+    Automatically select a radio button to maintain a consistent UI state.
+    <br />
+    TODO: Figure out how to make a radio button group using MVC helper
+</p>
+<div>
+    <p>Please select one of the following:</p>
+    <ul id="choosesrc" class="form-group list-unstyled">
+        <li class="radio">
+            @Html.RadioButton("source1","web",new { name = "source" })
+            @Html.Label("source1","Website or Blog")
+        </li>
+        <li class="radio">
+            @Html.RadioButton("source2","mag",new { name = "source" })
+            @Html.Label("source2","Magazine")
+        </li>
+        <li class="radio">
+            @Html.RadioButton("source3","per",new { name = "source" })
+            @Html.Label("source3","Friend")
+        </li>
+        <li class="radio">
+            @Html.RadioButton("source4","oth",new { name = "source" })
+            @Html.Label("source4","Other")
+            @Html.TextBox("source4txt","",new { @class = "form-control" })
+        </li>
+    </ul>
+</div>
+
+@section scripts {
+    <script type="text/jscript">
+        $(function () {
+            ////Listen for blur on any text input in choosesrc ul
+            //$('#choosesrc input:text').blur(function () {
+            //    //If text input has text then check the associated radio button
+            //    if($(this).val() != '') {
+            //        $(this).siblings('input:radio').attr('checked', true);
+            //    }
+            //});
+
+            //Get access to all radio buttons
+            $('#choosesrc input:text').each(function () {
+                //reference objects
+                var $inputtxt = $(this);
+                var $radiobtn = $inputtxt.siblings('input:radio');
+
+                //Listen for text input blur- check associated radio button
+                $inputtxt.blur(function () {
+                    if ($inputtxt.val() != '') {
+                        $radiobtn.attr('checked', true);
+                    }
+                });
+
+                //Listen for radio button change- give focus to associated text input if button checked
+                $radiobtn.change(function () {
+                    if (this.checked) { $inputtxt.focus(); }
+                });
+            });
+        });
+    </script>
+}

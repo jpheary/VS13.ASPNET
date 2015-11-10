@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "FocusInputOnLoad";
+}
+
+<h4>Focus Input On Load</h4>
+<p>Focus a texbox on form load</p>
+<div class="form-group">
+    @Html.Label("username","Username")
+    @Html.TextBox("username","",new { @class = "form-control" })
+</div>
+<div class="form-group">
+    @Html.Label("password","Password")
+    @Html.TextBox("password","",new { @class = "form-control" })
+</div>
+
+@section scripts {
+    <script type="text/jscript">
+        $(function () {
+            var $inputText = $('#username');
+            if ($inputText.val() == '') {
+                //Focus the username input by default
+                $inputText.focus();
+            }
+        });
+    </script>
+}

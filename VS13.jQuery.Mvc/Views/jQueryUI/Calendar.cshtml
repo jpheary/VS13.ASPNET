@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "jQuery UI Calendar";
+}
+@model VS13.Models.FromToDates
+<div class="calendar">
+    <div class="subtitle">jQuery Calendar</div>
+    <p>A simple calendar:  daysback = -30, daysforward = 0, no weekends</p>
+    <div>
+        <label for="txtDate">Date&nbsp;</label>@Html.TextBox("txtDate","",new { @class = "form-control" })
+    </div>
+</div>
+<hr />
+<div class="calendar">
+    <div class="subtitle">jQuery From-To Calendar</div>
+    <p>A simple calendar window: daysback = -365, daysforward = 30, daysspread = 14</p>
+    <div>
+        @Html.LabelFor(model => model.FromDate,htmlAttributes :new { @class = "control-label col-md-2" })
+        @Html.EditorFor(model => model.FromDate,"","txtFrom",new { htmlAttributes = new { @class = "form-control",@onchange = "javascript: showDateRange();" } })
+        &nbsp;-&nbsp;
+        @Html.EditorFor(model => model.ToDate,"","txtTo",new { htmlAttributes = new { @class = "form-control",@onchange = "javascript: showDateRange();" } })
+    </div>
+    <br /><br />
+    <div>
+        The selected date range is:&nbsp;<div id="daterange"></div>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/jscript">
+        var daysback = -365, daysforward = 30, daysspread = 14;
+        $(function () {
+            $("#txtDate").datepicker({ minDate: -30, maxDate: 0, defaultDate: 0, beforeShowDay: $.datepicker.noWeekends });
+
+            $("#txtFrom").datepicker({
+                minDate: daysback, maxDate: 0, defaultDate: 0, dateFormat: "mm/dd/yy",
+                onClose: function (selectedDate, instance) {
+                    $("#txtTo").datepicker("option", "minDate", selectedDate);
+
+                    var date = $.datepicker.parseDate("mm/dd/yy", selectedDate, instance.settings);
+                    date.setDate(date.getDate() + daysspread);
+                    var todate = $("#txtTo").datepicker("getDate");
+                    if (todate > date) $("#txtTo").datepicker("setDate", date);
+                    showDateRange();
+                }
+            });
+            $("#txtTo").datepicker({
+                minDate: 0, maxDate: daysforward, defaultDate: 0, dateFormat: "mm/dd/yy",
+                onClose: function (selectedDate, instance) {
+                    $("#txtFrom").datepicker("option", "maxDate", selectedDate);
+
+                    var date = $.datepicker.parseDate("mm/dd/yy", selectedDate, instance.settings);
+                    date.setDate(date.getDate() - daysspread);
+                    var fromdate = $("#txtFrom").datepicker("getDate");
+                    if (fromdate < date) $("#txtFrom").datepicker("setDate", date);
+                    showDateRange();
+                }
+            });
+            showDateRange();
+        });
+        function showDateRange() {
+            $("#daterange").html($.datepicker.formatDate("mm/dd/yy", $("#txtFrom").datepicker("getDate")) + " - " + $.datepicker.formatDate("mm/dd/yy", $("#txtTo").datepicker("getDate")));
+        }
+    </script>
+}

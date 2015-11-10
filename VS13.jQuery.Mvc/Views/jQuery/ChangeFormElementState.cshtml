@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "ChangeFormElementState";
+}
+
+<h4>Change Form Element State</h4>
+<p>Copy one set of fields (i.e. ship address) to another set of fields (i.e. billing address); disable input on auto-populate fields.</p>
+<div>
+    <fieldset id="shippinginfo">
+        <legend>Shipping Address</legend>
+        <div class="form-group">
+            @Html.Label("shipname","Name")
+            @Html.TextBox("shipname","",new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.Label("shipaddress","Address")
+            @Html.TextBox("shipaddress","",new { @class = "form-control" })
+        </div>
+    </fieldset>
+    <fieldset id="billinginfo">
+        <legend>Billing Info</legend>
+        <div class="form-group">
+            @Html.CheckBox("useshippingaddress")
+            @Html.Label("useshippingaddress","Same As Shipping")
+        </div>
+        <div class="form-group">
+            @Html.Label("billname","Name")
+            @Html.TextBox("billname","",new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.Label("billaddress","Address")
+            @Html.TextBox("billaddress","",new { @class = "form-control" })
+        </div>
+    </fieldset>
+</div>
+
+@section scripts {
+    <script type="text/jscript">
+        $(function () {
+            $('#useshippingaddress').change(function () {
+                //Listen for change event and pre-populate billing info if same as shipping info
+                //NOTE: Assumes shipping and billing fieldsets contain same number of inputs in same order
+                if (this.checked) {
+                    //Disable all text inputs inside billinginfo, then cycle throug each one
+                    $('#billinginfo input:text').attr('disabled', 'disabled').each(function (i) {
+                        //Find the shipping input that corresponds to this billing input and set billing val to same
+                        var valFromShippingInput = $('#shippinginfo input:text:eq(' + i + ')').val();
+                        $(this).val(valFromShippingInput);
+                    });
+                }
+                else {
+                    //Enable all text inputs inside billinginfo
+                    $('#billinginfo input:text').removeAttr('disabled').each(function () {
+                        //Clear billing inputs
+                        $(this).val('');
+                    });
+                }
+            }).trigger('change');   //close change then trigger it once
+
+            $('#shippinginfo input:text').bind('keyup change', function () {
+                //Update billing fields as shipping fields are entered (only if billing fields are disabled)
+                if ($('#useshippingaddress:checked').length) {
+                    //Find text input
+                    var i = $('#shippinginfo input:text').index(this);
+                    var valFromShippingInput = $(this).val();
+                    $('#billinginfo input:text:eq(' + i + ')').val(valFromShippingInput);
+                }
+            });
+        });
+    </script>
+}

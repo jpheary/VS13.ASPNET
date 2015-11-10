@@ -24,12 +24,26 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Calendar","Calendar","jQuery",new { area = "" },new { })</li>
-                    <li>@Html.ActionLink("Spinner","Spinner","jQuery",new { area = "" },new { })</li>
-                    <li>@Html.ActionLink("TabsH","TabsH","jQuery",new { area = "" },new { })</li>
-                    <li>@Html.ActionLink("TabsV","TabsV","jQuery",new { area = "" },new { })</li>
-                    <li>@Html.ActionLink("TimeSpinner","TimeSpinner","jQuery",new { area = "" },new { })</li>
-                    <li>@Html.ActionLink("Shipment","Shipment","jQuery",new { area = "" },new { })</li>
+                    <li class="dropdown-toggle">
+                        <a href="#" id="modelsmenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">JQuery<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Focus Input On Load","FocusInputOnLoad","jQuery")</li>
+                            <li>@Html.ActionLink("Change Form Element State","ChangeFormElementState","jQuery")</li>
+                            <li>@Html.ActionLink("Auto Select Radio Buttons","AutoSelectRadioButtons","jQuery")</li>
+                            <li>@Html.ActionLink("Toggle All Checkboxes","ToggleAllCheckboxes","jQuery")</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown-toggle">
+                        <a href="#" id="modelsmenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">JQuery UI<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Calendar","Calendar","jQueryUI")</li>
+                            <li>@Html.ActionLink("Spinner","Spinner","jQueryUI")</li>
+                            <li>@Html.ActionLink("TabsH","TabsH","jQueryUI")</li>
+                            <li>@Html.ActionLink("TabsV","TabsV","jQueryUI")</li>
+                            <li>@Html.ActionLink("TimeSpinner","TimeSpinner","jQueryUI")</li>
+                        </ul>
+                    </li>
+                    <li>@Html.ActionLink("About","About","Home")</li>
                 </ul>
             </div>
         </div>
