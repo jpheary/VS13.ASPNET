@@ -34,15 +34,38 @@ namespace VS13.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register([Bind(Include = "ParkingPermitID,VehicleID,Number,Activated,ActivatedBy,Inactivated,InactivatedBy,InactivatedReason")] ParkingPermit parkingPermit) {
+        public ActionResult Register([Bind(Include = "ParkingPermitID,VehicleID,Number,Activated,ActivatedBy,Vehicle")] ParkingPermit parkingPermit) {
             // POST: Permits/Register
             if (ModelState.IsValid) {
+                parkingPermit.Activated = DateTime.Now;
+                parkingPermit.ActivatedBy = Environment.UserName;
                 db.ParkingPermits.Add(parkingPermit);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
             return View(parkingPermit);
+        }
+
+        [HttpGet]
+        public string ValidatePermitNumber(string number) {
+            //Validate that the specified permit number is not is use
+            List<ParkingPermit> permits = db.ParkingPermits.Where(p => p.Number == number).ToList();
+            if (permits.Count > 0)
+                return "Permit# " + number + " is in use; please enter a new permit number.";
+            else
+                return "";
+        }
+
+        [HttpGet]
+        public string ValidateVehiclePlateNumber(string number) {
+            //Validate that the specified license plate is not on an 'active' permit
+            //TODO: Modifiy this to find plate on 'active' permit not all permits
+            List<Vehicle> vehicles = db.Vehicles.Where(v => v.PlateNumber == number).ToList();
+            if (vehicles.Count > 0)
+                return "Vehicle license plate " + vehicles[0].IssueState + " " + vehicles[0].PlateNumber + " is in use; please enter another license plate.";
+            else
+                return "";
         }
 
         public ActionResult Replace(int? id) {

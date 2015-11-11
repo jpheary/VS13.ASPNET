@@ -110,9 +110,59 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#Vehicle_ContactPhoneNumber").inputmask({ "mask": "999-999-9999" });
-    });
-</script>
+
+    <script type="text/javascript">
+        //TODO: Move to a js file (i.e. register.js) for unobtrusive javascript
+        $(document).ready(function () {
+            $("#Vehicle_ContactPhoneNumber").inputmask({ "mask": "999-999-9999" });
+
+            $('#Number').blur(function () {
+                var $number = $(this);
+                $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("ValidatePermitNumber")',
+                    contentType: "application/text; charset=utf-8",
+                    data: param = { number: $number.val() },
+                    dataType: "text",
+                    success: function (text, status) {
+                        if (text) {
+                            $number.val('');
+                            alert(text);
+                            $number.focus();
+                        }
+                        else {
+                            $("#Vehicle_IssueState").focus();
+                        }
+                    },
+                    error: function () { alert('Failure'); },
+                    beforeSend: function () { $("body").css("cursor", "wait"); },
+                    complete: function () { $("body").css("cursor", "default"); }
+                });
+            });
+
+            $('#Vehicle_PlateNumber').blur(function () {
+                var $number = $(this);
+                $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("ValidateVehiclePlateNumber")',
+                    contentType: "application/text; charset=utf-8",
+                    data: param = { number: $number.val() },
+                    dataType: "text",
+                    success: function (text, status) {
+                        if (text) {
+                            $number.val('');
+                            alert(text);
+                            $number.focus();
+                        }
+                        else {
+                            $("#Vehicle_Year").focus();
+                        }
+                    },
+                    error: function () { alert('Failure'); },
+                    beforeSend: function () { $("body").css("cursor", "wait"); },
+                    complete: function () { $("body").css("cursor", "default"); }
+                });
+            });
+        });
+    </script>
 }
