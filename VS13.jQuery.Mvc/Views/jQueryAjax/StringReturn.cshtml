@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "StringReturn";
+}
+
+<h4>String Return</h4>
+<p>Send an Ajax request and get a string return. Could be used as a validation method on a field such as checking for a unique entry.</p>
+<div class="form-group">
+    @Html.Label("number","Enter a number and tab out (i.e. blur):")
+    @Html.TextBox("number","",new { @class = "form-control" })
+</div>
+
+@section scripts {
+    <script type="text/jscript">
+        $(document).ready(function () {
+            $('#number').blur(function () {
+                var $number = $(this);
+                $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("StringCheck")',
+                    contentType: "application/text; charset=utf-8",
+                    data: param = { number: $number.val() },
+                    dataType: "text",
+                    success: function (text, status) {
+                        if (text) {
+                            $number.val('');
+                            alert(text);
+                            $number.focus();
+                        }
+                        else {
+                            alert("That's OK.");
+                        }
+                    },
+                    error: function () { alert('Must have thown an unhandled exception. Hey now.'); },
+                    beforeSend: function () { $("body").css("cursor", "wait"); },
+                    complete: function () { $("body").css("cursor", "default"); }
+                });
+            });
+        });
+    </script>
+}
+
+

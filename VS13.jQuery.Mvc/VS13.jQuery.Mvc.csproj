@@ -112,6 +112,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\jQueryAjaxController.cs" />
     <Compile Include="Controllers\jQueryController.cs" />
     <Compile Include="Controllers\jQueryUIController.cs" />
     <Compile Include="Global.asax.cs">
@@ -188,6 +189,8 @@
     <Content Include="Views\jQuery\ChangeFormElementState.cshtml" />
     <Content Include="Views\jQuery\AutoSelectRadioButtons.cshtml" />
     <Content Include="Views\jQuery\ToggleAllCheckboxes.cshtml" />
+    <Content Include="Views\jQueryAjax\Index.cshtml" />
+    <Content Include="Views\jQueryAjax\StringReturn.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
