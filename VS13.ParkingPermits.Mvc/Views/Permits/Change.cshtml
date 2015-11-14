@@ -10,7 +10,12 @@
 
     <div class="form-horizontal permit">
         @Html.ValidationSummary(true,"",new { @class = "text-danger" })
-
+        @Html.HiddenFor(model => model.ParkingPermitID)
+        @Html.HiddenFor(model => model.VehicleID)
+        @Html.HiddenFor(model => model.Number)
+        @Html.HiddenFor(model => model.Activated)
+        @Html.HiddenFor(model => model.ActivatedBy)
+        @Html.HiddenFor(model => model.Vehicle.VehicleID)
         <div>
             <fieldset>
                 <legend>Vehicle</legend>

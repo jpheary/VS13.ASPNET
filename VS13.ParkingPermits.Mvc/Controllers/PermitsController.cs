@@ -128,13 +128,16 @@ namespace VS13.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Change([Bind(Include = "ParkingPermitID,VehicleID,Number,Activated,ActivatedBy,Inactivated,InactivatedBy,InactivatedReason")] ParkingPermit parkingPermit) {
+        public ActionResult Change([Bind(Include = "ParkingPermitID,VehicleID,Number,Activated,ActivatedBy,Vehicle")] ParkingPermit parkingPermit) {
             // POST: Permits/Change vehicle
-            if (ModelState.IsValid) {
-                //TODO: Create new vehicle, associate to permit
-                return RedirectToAction("Index");
+            try { 
+                if (ModelState.IsValid) {
+                    db.Entry(parkingPermit.Vehicle).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
-
+            catch (Exception ex) { ModelState.AddModelError("", ex.Message); }
             return View(parkingPermit);
         }
 
