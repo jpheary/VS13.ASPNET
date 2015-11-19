@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - VS13.Bootstrap.Mvc</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("VS13.Bootstrap.Mvc","Index","Home",new { area = "" },new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li class="dropdown-toggle">
+                        <a href="#" id="cssmenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Bootstrap CSS<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Typography","Typography","CSS")</li>
+                            <li>@Html.ActionLink("Code","Code","CSS")</li>
+                            <li>@Html.ActionLink("Tables","Tables","CSS")</li>
+                            <li>@Html.ActionLink("Forms","Forms","CSS")</li>
+                            <li>@Html.ActionLink("Buttons","Buttons","CSS")</li>
+                            <li>@Html.ActionLink("Images","Images","CSS")</li>
+                            <li>@Html.ActionLink("Icons","Icons","CSS")</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown-toggle">
+                        <a href="#" id="layoutmenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Bootstrap Layout Components<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Menus","Menus","Layout")</li>
+                            <li>@Html.ActionLink("Navigation","Navigation","Layout")</li>
+                            <li>@Html.ActionLink("Breadcrumbs","Breadcrumbs","Layout")</li>
+                            <li>@Html.ActionLink("Pagination","Pagination","Layout")</li>
+                            <li>@Html.ActionLink("Labels","Labels","Layout")</li>
+                            <li>@Html.ActionLink("Typographic","Typographic","Layout")</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown-toggle">
+                        <a href="#" id="pluginsmenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Bootstrap JavaScript Plugins<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Modal","Modal","Plugins")</li>
+                            <li>@Html.ActionLink("Scrollspy","Scrollspy","Plugins")</li>
+                            <li>@Html.ActionLink("Collapse","Collapse","Plugins")</li>
+                            <li>@Html.ActionLink("Carousel","Carousel","Plugins")</li>
+                        </ul>
+                    </li>
+                    <li>@Html.ActionLink("About","About","Home")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - jpHeary</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
