@@ -110,6 +110,30 @@
     <script type="text/javascript">
     $(document).ready(function () {
         $("#Vehicle_ContactPhoneNumber").inputmask({ "mask": "999-999-9999" });
+
+        $('#Vehicle_PlateNumber').change(function () {
+            var $number = $(this);
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("ValidateVehiclePlateNumber")',
+                contentType: "application/text; charset=utf-8",
+                data: param = { number: $number.val() },
+                dataType: "text",
+                success: function (text, status) {
+                    if (text) {
+                        $number.val('');
+                        alert(text);
+                        $number.focus();
+                    }
+                    else {
+                        $("#Vehicle_Year").focus();
+                    }
+                },
+                error: function () { alert('Failure'); },
+                beforeSend: function () { $("body").css("cursor", "wait"); },
+                complete: function () { $("body").css("cursor", "default"); }
+            });
+        });
     });
     </script>
 }
