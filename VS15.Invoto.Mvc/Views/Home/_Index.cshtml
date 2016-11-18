@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "Invonto Test";
+}
+@model IEnumerable<VS15.Models.Contact>
+
+<h2>Invonto Contacts</h2>
+<div>
+    <div id="contacts">
+        <p>@Html.ActionLink("Add Contact", "CreateContact")</p>
+        <div class="">
+            @foreach (var contact in Model) {
+                <div class="row contact">
+                    <div class="col-md-3">
+                        <img src="@Url.Content(contact.Profile)" style="width:200px" />
+                        <br />
+                        @Html.ActionLink(contact.Email, "EditContact", new { id = contact.ContactID }, new { title = "Click here to view this contact." })
+                        <br />
+                    </div>
+                    <div class="col-md-3">
+                        @Html.DisplayNameFor(model => model.FirstName) : @Html.DisplayFor(modelItem => contact.FirstName)<br />
+                        @Html.DisplayNameFor(model => model.LastName) : @Html.DisplayFor(modelItem => contact.LastName)<br />
+                        <br />
+                    </div>
+                    <div class="col-md-3">
+                        @Html.DisplayNameFor(model => model.Phone) :  @Html.DisplayFor(modelItem => contact.Phone, new { id = "phone" })<br />
+                        @Html.DisplayNameFor(model => model.Birthdate) :  @Html.DisplayFor(modelItem => contact.Birthdate, new { id = "birth" })<br />
+                        <br />
+                    </div>
+                    <div class="col-md-3">
+                        <label>Groups</label> : @Html.DisplayFor(modelItem => contact.Groups)<br />
+                    </div>
+                </div>
+                <div class="row" style="margin:10px 10px 0px 10px; padding-top:10px; border-top:1px solid #eeeeee; text-align:left">
+                    <div class="col-md-12">
+                        @Html.ActionLink("Edit", "EditContact", new { id = contact.ContactID })
+                        &nbsp;|&nbsp;
+                        @Html.ActionLink("Delete", "DeleteContact", new { id = contact.ContactID })
+                    </div>
+                </div>
+                <hr />
+            }
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+    $(document).ready(function () {
+
+    });
+    </script>
+}

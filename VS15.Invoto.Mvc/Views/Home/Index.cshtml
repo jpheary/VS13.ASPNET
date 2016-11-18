@@ -1,0 +1,119 @@
+﻿@{
+    ViewBag.Title = "Invonto Test";
+}
+
+<h2>Invonto Contacts</h2>
+<div ng-app="InvontoApp" class="container body-content">
+    <div id="contacts" ng-controller="InvontoController as controller">
+        <div ng-show="vwContacts">
+            <ul>
+                <li ng-repeat="contact in controller.contacts">
+                    <div class="row contact">
+                        <div class="col-sm-3">
+                            <a href="#" ng-click="controller.editContact(contact)"><img ng-src="{{contact.Profile}}" style="width:100%" /></a>
+                            <br />
+                            <div style="margin-top:5px; text-align:center">{{contact.Email}}</div>
+                            <br />
+                        </div>
+                        <div class="col-sm-9">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label>First Name</label> : {{contact.FirstName}}<br />
+                                    <label>Last Name</label> : {{contact.LastName}}<br />
+                                    <br />
+                                </div>
+                                <div class="col-sm-4">
+                                    <label>Phone</label> :  {{contact.Phone}}<br />
+                                    <label>Birthdate</label> :  {{contact.Birthdate}}<br />
+                                    <br />
+                                </div>
+                                <div class="col-sm-4">
+                                    <label>Groups</label> : 
+                                    <ul>
+                                        <li ng-repeat="group in contact.Groups">
+                                            {{group.Name}}
+                                        </li>
+                                    </ul>
+                                    <br />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label>Comments</label><br />
+                                    <div style="word-break: break-word;">{{contact.Comments}}</div>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row services" style="margin:10px 10px 0px 10px; padding-top:10px; border-top:1px solid #eeeeee; text-align:left">
+                        <div class="col-sm-12">
+                            <a href="#" ng-click="controller.editContact(contact)">Edit</a>
+                            &nbsp;|&nbsp;
+                            <a href="#" ng-click="controller.deleteContact(contact)">Remove</a>
+                        </div>
+                    </div>
+                    <hr />
+                </li>
+            </ul>
+            <br />
+            <div>
+                <a href="#" ng-click="add()">Add Contact</a>
+            </div>
+        </div>
+        <div ng-show="vwContact">
+            <p class="divHead">{{controller.Action}} Contact <input type="text" id="ContactID" disabled="disabled" ng-model="controller.ContactID" style="width:25px; border:none; text-align:center" /></p>
+            <div class="row contact">
+                <div class="col-sm-3">
+                    <img ng-src="{{controller.Profile}}" style="width:100%" />
+                    <br /><br />
+                    <input type="file" name="attachment" file-model="fileUrl" />
+                    <br />
+                    <input type="text" id="Email" ng-model="controller.Email" size="100" placeholder="Email"><br />
+                    <br />
+                </div>
+                <div class="col-sm-9">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label>First Name</label><br /><input type="text" id="FirstName" ng-model="controller.FirstName" size="30" placeholder="First name"><br />
+                            <label>Last Name</label><br /><input type="text" id="LastName" ng-model="controller.LastName" size="30" placeholder="Last Name"><br />
+                            <br />
+                        </div>
+                        <div class="col-sm-4">
+                            <label>Phone</label><br /><input type="text" id="Phone" ng-model="controller.Phone" size="12" placeholder="Phone"><br />
+                            <label>Birthdate</label><br /><input type="text" id="Birthdate" ng-model="controller.Birthdate" size="10" placeholder="Birthdate"><br />
+                            <br />
+                        </div>
+                        <div class="col-sm-4">
+                            <label>Groups</label> : <br />
+                            <ul ng-repeat="group in controller.GroupList">
+                                <li><input type="checkbox" value="{{group.GroupID}}" ng-model="group.Selected" ng-click="changeGroup(group)" />&nbsp;{{group.Name}}</li>
+                            </ul>
+                            <br />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label>Comments</label><br />
+                            <textarea id="Comments" ng-model="controller.Comments" size="2000" style="width:100%"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row services" style="margin:10px 0px 0px 0px; padding-top:10px; border-top:1px solid #eeeeee; text-align:left">
+                <a href="#" ng-click="controller.addeditContact()">Save</a>
+                &nbsp;|&nbsp;
+                <a href="#" ng-click="cancel()">Cancel</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $("#Birthdate").datepicker({ maxDate: 0, defaultDate: 0 });
+        $("#Phone").inputmask({ "mask": "999-999-9999" });
+    });
+    </script>
+}
