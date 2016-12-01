@@ -1,24 +1,45 @@
 ﻿@model IEnumerable<VS13.Models.Person>
 @{
-  ViewBag.Title = "Index";
+  ViewBag.Title = "VS13.ASPNET.Mvc";
 }
 
-<h2>Index</h2>
-<p>@Html.ActionLink("Create New","Create")</p>
-<table class="table">
-  <tr>
-    <th>@Html.DisplayNameFor(model => model.Name)</th>
-    <th>@Html.DisplayNameFor(model => model.Birthdate)</th>
-    <th>@Html.DisplayNameFor(model => model.Gender)</th>
-    <th></th>
-  </tr>
+<h2>People of the World</h2>
+<div id="world">
+    <div class="world-header">
+        @Html.ActionLink("New Person", "Create")
+    </div>
+    <br />
+    <div class="world-body">
+        @foreach (var person in Model) {
+        <div class="people">
+            <div class="row person">
+                <div class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Name) : @Html.ActionLink(person.Name, "Read", new { id = person.ID }, new { title = "Click here to view this person." })
+                </div>
+                <div class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Birthdate) :  @Html.DisplayFor(model => person.Birthdate)
+                </div>
+                <div class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Gender) : @Html.DisplayFor(model => person.Gender)
+                </div>
+            </div>
+            <div class="row services" style="margin:10px 10px 0px 10px; padding-top:10px; border-top:1px solid #eeeeee; text-align:left">
+                <div class="col-sm-12">
+                    @Html.ActionLink("Edit", "Edit", new { id = person.ID })
+                    &nbsp;|&nbsp;
+                    @Html.ActionLink("Delete", "Delete", new { id = person.ID }, new { onclick = "return confirm('Are you sure you wish to delete this person?');" })
+                </div>
+            </div>
+            <hr />
+        </div>
+        }
+    </div>
+</div>
 
-  @foreach (var item in Model) {
-    <tr>
-      <td>@Html.DisplayFor(modelItem => item.Name)</td>
-      <td>@Html.DisplayFor(modelItem => item.Birthdate)</td>
-      <td>@Html.DisplayFor(modelItem => item.Gender)</td>
-      <td>@Html.ActionLink("Edit","Edit",new { id = item.ID }) | @Html.ActionLink("Details","Details",new { id = item.ID }) | @Html.ActionLink("Delete","Delete",new { id = item.ID })</td>
-    </tr>
-  }
-</table>
+@section scripts {
+    <script type="text/javascript">
+    $(document).ready(function () {
+
+    });
+    </script>
+}
