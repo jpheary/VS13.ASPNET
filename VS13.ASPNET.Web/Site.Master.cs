@@ -52,7 +52,6 @@ namespace VS13 {
             }
         }
         protected void Page_Load(object sender,EventArgs e) {
-            string path = new Class1().GetAbsolutePath("~/App_Data/reports.xml");
         }
         protected void Unnamed_LoggingOut(object sender,LoginCancelEventArgs e) {
             Context.GetOwinContext().Authentication.SignOut();

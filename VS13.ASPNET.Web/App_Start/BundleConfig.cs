@@ -10,6 +10,12 @@ namespace VS13 {
     public class BundleConfig {
         // For more information on Bundling, visit http://go.microsoft.com/fwlink/?LinkID=303951
         public static void RegisterBundles(BundleCollection bundles) {
+            //
+            bundles.Add(new ScriptBundle("~/bundles/jquery").Include("~/Scripts/jquery-*"));
+            bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include("~/Scripts/jquery-ui-*"));
+            bundles.Add(new ScriptBundle("~/bundles/jqueryglobal").Include("~/Scripts/jquery-globalize-*"));
+            bundles.Add(new ScriptBundle("~/bundles/jqueryextra").Include("~/Scripts/jquery.*"));
+            
             bundles.Add(new ScriptBundle("~/bundles/WebFormsJs").Include(
                             "~/Scripts/WebForms/WebForms.js",
                             "~/Scripts/WebForms/WebUIValidation.js",
@@ -19,29 +25,17 @@ namespace VS13 {
                             "~/Scripts/WebForms/DetailsView.js",
                             "~/Scripts/WebForms/TreeView.js",
                             "~/Scripts/WebForms/WebParts.js"));
-
-            // Order is very important for these files to work, they have explicit dependencies
             bundles.Add(new ScriptBundle("~/bundles/MsAjaxJs").Include(
-                    "~/Scripts/WebForms/MsAjax/MicrosoftAjax.js",
-                    "~/Scripts/WebForms/MsAjax/MicrosoftAjaxApplicationServices.js",
-                    "~/Scripts/WebForms/MsAjax/MicrosoftAjaxTimer.js",
-                    "~/Scripts/WebForms/MsAjax/MicrosoftAjaxWebForms.js"));
-
-            // Use the Development version of Modernizr to develop with and learn from. Then, when you’re
-            // ready for production, use the build tool at http://modernizr.com to pick only the tests you need
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                            "~/Scripts/modernizr-*"));
-
-            // Set EnableOptimizations to false for debugging. For more information,
-            // visit http://go.microsoft.com/fwlink/?LinkId=301862
+                            "~/Scripts/WebForms/MsAjax/MicrosoftAjax.js",
+                            "~/Scripts/WebForms/MsAjax/MicrosoftAjaxApplicationServices.js",
+                            "~/Scripts/WebForms/MsAjax/MicrosoftAjaxTimer.js",
+                            "~/Scripts/WebForms/MsAjax/MicrosoftAjaxWebForms.js"));
+            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include("~/Scripts/modernizr-*"));
+            
+            //Set EnableOptimizations to false for debugging. For more information, visit http://go.microsoft.com/fwlink/?LinkId=301862
             BundleTable.EnableOptimizations = true;
 
-            ScriptManager.ScriptResourceMapping.AddDefinition(
-                "respond",
-                new ScriptResourceDefinition {
-                    Path = "~/Scripts/respond.min.js",
-                    DebugPath = "~/Scripts/respond.js",
-                });
+            ScriptManager.ScriptResourceMapping.AddDefinition("respond", new ScriptResourceDefinition {Path="~/Scripts/respond.min.js", DebugPath="~/Scripts/respond.js",});
         }
     }
 }

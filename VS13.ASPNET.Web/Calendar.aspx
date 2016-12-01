@@ -1,41 +1,58 @@
 ﻿<%@ Page Title="Calendar" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Calendar.aspx.cs" Inherits="VS13.Calendar" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <script type="text/jscript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.10.2.js"></script>
-    <script type="text/jscript" src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/jquery-ui.js"></script>
-    <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/themes/smoothness/jquery-ui.css" />
-	<style type="text/css" media="screen">
-		<!-- 
-        .title {
-            margin: 25px 0px 25px 0px; padding: 0px 0px 0px 0px; font-size: 24px; font-weight: bold; text-align: center; color: #000000;
-        }
-        .label {
-            width: 100px; padding: 0px 10px 0px 0px; font-size: 12px; font-weight: bold; text-align: right; color: #000000;
-        }
-        .input {
-            text-align: left;
-        }
-        -->
-	</style>
     <script type="text/jscript">
-        $(document).ready(function () {
-            $("#<%=txtCalDate.ClientID %>").datepicker({ minDate: +1, maxDate: +30, beforeShowDay: $.datepicker.noWeekends });
+        var daysback = -30, daysforward = 0, daysspread = 7;
+        $(function () {
+            $("#<%=txtDate.ClientID %>").datepicker({ minDate: -30, maxDate: 0, beforeShowDay: $.datepicker.noWeekends });
 
             $("#<%=txtFrom.ClientID %>").datepicker({
-                defaultDate: "1", onClose: function (selectedDate) { $("#<%=txtTo.ClientID %>").datepicker("option", "minDate", selectedDate); }
+                minDate: daysback, maxDate: 0, defaultDate: 0,
+                onClose: function (selectedDate, instance) {
+                    $("#<%=txtTo.ClientID %>").datepicker("option", "minDate", selectedDate);
+
+                    var date = $.datepicker.parseDate("mm/dd/yy", selectedDate, instance.settings);
+                    date.setDate(date.getDate() + daysspread);
+                    var todate = $("#<%=txtTo.ClientID %>").datepicker("getDate");
+                    if (todate > date) $("#<%=txtTo.ClientID %>").datepicker("setDate", date);
+                }
             });
             $("#<%=txtTo.ClientID %>").datepicker({
-                defaultDate: "1", onClose: function (selectedDate) { $("#<%=txtFrom.ClientID %>").datepicker("option", "maxDate", selectedDate); }
+                minDate: 0, maxDate: daysforward, defaultDate: 0,
+                onClose: function (selectedDate, instance) {
+                    $("#<%=txtFrom.ClientID %>").datepicker("option", "maxDate", selectedDate);
+
+                    var date = $.datepicker.parseDate("mm/dd/yy", selectedDate, instance.settings);
+                    date.setDate(date.getDate() - daysspread);
+                    var fromdate = $("#<%=txtFrom.ClientID %>").datepicker("getDate");
+                    if (fromdate < date) $("#<%=txtFrom.ClientID %>").datepicker("setDate", date);
+                }
             });
         });
     </script>
-    <div class="title">jQuery Calendar</div>
-    <table>
-        <tr><td class="label">Date:</td><td class="input"><asp:TextBox ID="txtCalDate" runat="server" Width="100px" /></td></tr>
-    </table>
-    <div class="title">jQuery From-To Calendar</div>
-    <table>
-        <tr><td class="label">From:</td><td class="input"><asp:TextBox ID="txtFrom" runat="server" Width="100px" /></td></tr>
-        <tr><td class="label">To:</td><td class="input"><asp:TextBox ID="txtTo" runat="server" Width="100px" /></td></tr>
-    </table>
+    <div style="margin:50px 0px 0px 0px; font-size:24px">jQuery Calendar</div>
+    <div style="margin:50px 0px 0px 25px">
+        <label for="txtDate">Date&nbsp;</label>
+        <asp:TextBox ID="txtDate" runat="server" Width="100px" />
+    </div>
+    <hr />
+    <div style="margin:50px 0px 0px 0px; font-size:24px">jQuery From-To Calendar</div>
+    <div style="margin:50px 0px 0px 25px">
+        <label for="txtFrom">From&nbsp;</label>
+        <asp:TextBox ID="txtFrom" runat="server" Width="100px" AutoPostBack="true" OnTextChanged="OnDatesChanged" />
+        <label for="txtTo">&nbsp;-&nbsp;</label>
+        <asp:TextBox ID="txtTo" runat="server" Width="100px" AutoPostBack="true" OnTextChanged="OnDatesChanged" />
+    </div>
+   <br /><br />
+    <asp:UpdatePanel runat="server" ID="upnlDates" UpdateMode="Conditional">
+    <ContentTemplate>
+        <table>
+            <tr><td>The selected date range is:&nbsp;</td><td><asp:Label ID="lblDates" runat="server" Text="" /></td></tr>
+        </table>
+    </ContentTemplate>
+    <Triggers>
+        <asp:AsyncPostBackTrigger ControlID="txtFrom" EventName="TextChanged" />
+        <asp:AsyncPostBackTrigger ControlID="txtTo" EventName="TextChanged" />
+    </Triggers>
+    </asp:UpdatePanel>
 </asp:Content>

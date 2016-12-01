@@ -1,0 +1,80 @@
+<?xml version="1.0" standalone="yes"?>
+<ShipperDataset xmlns="http://tempuri.org/ShipperDataset.xsd">
+  <xs:schema id="ShipperDataset" targetNamespace="http://tempuri.org/ShipperDataset.xsd" xmlns:mstns="http://tempuri.org/ShipperDataset.xsd" xmlns="http://tempuri.org/ShipperDataset.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" attributeFormDefault="qualified" elementFormDefault="qualified">
+    <xs:element name="ShipperDataset" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+      <xs:complexType>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="ShipperTable">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="ShipperNumber" type="xs:string" minOccurs="0" />
+                <xs:element name="ClientNumber" type="xs:string" minOccurs="0" />
+                <xs:element name="ClientName" type="xs:string" minOccurs="0" />
+                <xs:element name="Name" type="xs:string" minOccurs="0" />
+                <xs:element name="AddressLine1" type="xs:string" minOccurs="0" />
+                <xs:element name="City" type="xs:string" minOccurs="0" />
+                <xs:element name="State" type="xs:string" minOccurs="0" />
+                <xs:element name="Zip" type="xs:string" minOccurs="0" />
+                <xs:element name="ContactName" type="xs:string" minOccurs="0" />
+                <xs:element name="ContactPhone" type="xs:string" minOccurs="0" />
+                <xs:element name="ContactEmail" type="xs:string" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:choice>
+      </xs:complexType>
+    </xs:element>
+  </xs:schema>
+  <ShipperTable>
+    <ShipperNumber>SH001</ShipperNumber>
+    <ClientNumber>001</ClientNumber>
+    <ClientName>Speedy Logistics, Inc.</ClientName>
+    <Name>Speedy Logistics, Inc.</Name>
+    <AddressLine1>100 Main Street</AddressLine1>
+    <City>Monroe Township</City>
+    <State>NJ</State>
+    <Zip>08831</Zip>
+    <ContactName>Ray Langley</ContactName>
+    <ContactPhone>732-867-5309</ContactPhone>
+    <ContactEmail>tleary@speedylogistics.com</ContactEmail>
+  </ShipperTable>
+  <ShipperTable>
+    <ShipperNumber>SH002</ShipperNumber>
+    <ClientNumber>001</ClientNumber>
+    <ClientName>Speedy Logistics, Inc.</ClientName>
+    <Name>R.O.X. Warehouse</Name>
+    <AddressLine1>100 Monroe Ave Bldg 55</AddressLine1>
+    <City>Bloomfield</City>
+    <State>NJ</State>
+    <Zip>07003</Zip>
+    <ContactName>Tom McLanahan</ContactName>
+    <ContactPhone>908-931-5555</ContactPhone>
+    <ContactEmail></ContactEmail>
+  </ShipperTable>
+  <ShipperTable>
+    <ShipperNumber>SH003</ShipperNumber>
+    <ClientNumber>001</ClientNumber>
+    <ClientName>Speedy Logistics, Inc.</ClientName>
+    <Name>Test Company</Name>
+    <AddressLine1>699 Broadway</AddressLine1>
+    <City>New York</City>
+    <State>NY</State>
+    <Zip>10101</Zip>
+    <ContactName>Jay Z</ContactName>
+    <ContactPhone>609-332-3628</ContactPhone>
+    <ContactEmail>justpedal@hotmail.com</ContactEmail>
+  </ShipperTable>
+  <ShipperTable>
+    <ShipperNumber>SH004</ShipperNumber>
+    <ClientNumber>001</ClientNumber>
+    <ClientName>Speedy Logistics, Inc.</ClientName>
+    <Name>Academy Fence</Name>
+    <AddressLine1>1 Oak Lane</AddressLine1>
+    <City>Monroe Township</City>
+    <State>NJ</State>
+    <Zip>08831</Zip>
+    <ContactName>Jay B</ContactName>
+    <ContactPhone>732-666-2345</ContactPhone>
+    <ContactEmail>jhandley@yahoo.com</ContactEmail>
+  </ShipperTable>
+</ShipperDataset>
