@@ -57,23 +57,17 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Basic.aspx" />
     <Content Include="Blog.aspx" />
     <Content Include="content\cover.css" />
-    <Content Include="content\integrity.css" />
     <Content Include="CoverPage.aspx" />
     <Content Include="Dashboard.aspx" />
     <Content Include="content\dashboard.css" />
-    <Content Include="EarthTones.aspx" />
     <Content Include="content\blog.css" />
     <Content Include="content\grid.css" />
-    <Content Include="content\starter.css" />
     <Content Include="content\bootstrap-theme.css" />
     <Content Include="content\bootstrap-theme.min.css" />
     <Content Include="content\bootstrap.css" />
     <Content Include="content\bootstrap.min.css" />
-    <Content Include="content\earthtones.css" />
-    <Content Include="content\stickyfooter.css" />
     <Content Include="content\theme.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -85,7 +79,6 @@
     <None Include="scripts\jquery-1.9.0.intellisense.js" />
     <Content Include="Glyphicons.aspx" />
     <Content Include="Grid.aspx" />
-    <Content Include="Integrity.aspx" />
     <Content Include="scripts\bootstrap.js" />
     <Content Include="scripts\bootstrap.min.js" />
     <Content Include="scripts\docs.min.js" />
@@ -103,23 +96,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="content\cheesesurvivalkit.css" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
     <Content Include="scripts\npm.js" />
-    <Content Include="Starter.aspx" />
-    <Content Include="StickyFooter.aspx" />
     <Content Include="Theme.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Basic.aspx.cs">
-      <DependentUpon>Basic.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Basic.aspx.designer.cs">
-      <DependentUpon>Basic.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Blog.aspx.cs">
       <DependentUpon>Blog.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -140,13 +123,6 @@
     </Compile>
     <Compile Include="Dashboard.aspx.designer.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="EarthTones.aspx.cs">
-      <DependentUpon>EarthTones.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="EarthTones.aspx.designer.cs">
-      <DependentUpon>EarthTones.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -172,28 +148,7 @@
     <Compile Include="Grid.aspx.designer.cs">
       <DependentUpon>Grid.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Integrity.aspx.cs">
-      <DependentUpon>Integrity.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Integrity.aspx.designer.cs">
-      <DependentUpon>Integrity.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Starter.aspx.cs">
-      <DependentUpon>Starter.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Starter.aspx.designer.cs">
-      <DependentUpon>Starter.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="StickyFooter.aspx.cs">
-      <DependentUpon>StickyFooter.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="StickyFooter.aspx.designer.cs">
-      <DependentUpon>StickyFooter.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Theme.aspx.cs">
       <DependentUpon>Theme.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

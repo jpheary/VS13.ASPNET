@@ -4,18 +4,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Home</title>
-    <link type="text/css" rel="stylesheet" href="Content/CheeseSurvivalKit.css" />
 </head>
 <body>
     <form id="form1" runat="server">
-    <div>
-        Hello ASP.NET Empty Project!
-    </div>
-    <div class="One"></div>
-    <div class="Two"></div>
-    <div class="Three"></div>
-    <div class="Four"></div>
-    <div class="Five"></div>
+        <ul>
+            <li><a href="/blog.aspx">Blog</a></li>
+            <li><a href="/dashboard.aspx">Dashboard</a></li>
+            <li><a href="/glyphicons.aspx">Glyphicons</a></li>
+            <li><a href="/grid.aspx">Grid</a></li>
+            <li><a href="/theme.aspx">Theme</a></li>
+        </ul>
     </form>
 </body>
 </html>
