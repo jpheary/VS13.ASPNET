@@ -5,7 +5,10 @@ using System.Linq;
 namespace VS15.Models {
     public class InvontoGateway:DbContext {
         //
-        public InvontoGateway() : base("name=InvontoGateway") { }
+        public InvontoGateway() : base("name=InvontoGateway") {
+            //Constructor
+            Database.SetInitializer(new InvontoGatewayDbInitializer());
+        }
 
         public DbSet<VS15.Models.Contact> Contacts { get; set; }
 

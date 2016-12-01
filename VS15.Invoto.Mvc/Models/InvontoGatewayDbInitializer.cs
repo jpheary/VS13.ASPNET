@@ -6,7 +6,7 @@ using System.Web;
 
 namespace VS15.Models {
     //
-    public class InvontoGatewayDbInitializer:DropCreateDatabaseAlways<InvontoGateway> {
+    public class InvontoGatewayDbInitializer:DropCreateDatabaseIfModelChanges<InvontoGateway> {
         //Members
 
         //Interface
