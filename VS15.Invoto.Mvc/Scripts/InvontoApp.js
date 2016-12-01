@@ -2,19 +2,26 @@
 
 invontoApp.controller('InvontoController', function ($scope, InvontoService) {
     var controller = this;
+    controller.Contacts = null;     //Binding list of contacts
+    controller.GroupList = null;    //Binding list of groups
+    controller.Contact = null;      //Contact for add/edit form
+
     $scope.vwContacts = true;
     $scope.vwContact = false;
     $scope.add = function () {
-        controller.Action = "Add";
-        controller.ContactID = controller.FirstName = controller.LastName = controller.Email = controller.Phone = controller.Birthdate = controller.Profile = controller.Comments = '';
-        controller.Profile = "/images/";
-        controller.Groups = [];
+        controller.Contact = { Action: "Add", ContactID: 0, FirstName: '', LastName: '', Email: '', Phone: '', Birthdate: '', Profile: "/images/", Comments: '', Groups: [] };
         $scope.vwContacts = false;
         $scope.vwContact = true;
+        $scope.fileUrl = "";
+        $('#ProfileImage').val(''); //Clear the file input
+
+        //Add a new object to the model and let the template display it
+        //TODO: Need to create conditional views to show inputs when id=0
+        //var contact = { ContactID: 0, FirstName: '', LastName: '', Email: '', Phone: '', Birthdate: '', Profile: "/images/", Comments: '', Groups: [] };
+        //controller.Contacts.push(contact);
     }
     $scope.cancel = function () {
         if(confirm("Are you sure you want to cancel?")) {
-            controller.Profile = "";
             for (var i = 0; i < controller.GroupList.length; i++) {
                 controller.GroupList[i].Selected = false;
             }
@@ -24,19 +31,21 @@ invontoApp.controller('InvontoController', function ($scope, InvontoService) {
     }
     $scope.changeGroup = function (group) {
         if (group.Selected) {
-            controller.Groups.push(group);
+            controller.Contact.Groups.push(group);
         }
         else {
-            var index = controller.Groups.indexOf(group);
-            controller.Groups.splice(index, 1);
+            var index = controller.Contact.Groups.indexOf(group);
+            controller.Contact.Groups.splice(index, 1);
         }
     };
 
+    //Load contacts and groups
     InvontoService.viewContacts().success(function (contacts) {
-        controller.contacts = contacts;
+        //Load contacts view
+        controller.Contacts = contacts;
     }).error(function (response) { alert(response); })
     InvontoService.listGroups().success(function (groups) {
-        //GroupList used for add\edit form
+        //Load contact Groups into GroupList- used for add\edit form
         controller.GroupList = groups;
         for (var i = 0; i < controller.GroupList.length; i++) {
             controller.GroupList[i].Selected = false;
@@ -44,55 +53,51 @@ invontoApp.controller('InvontoController', function ($scope, InvontoService) {
     })
 
     controller.editContact = function (contact) {
-        controller.Action = "Update";
-        controller.ContactID = contact.ContactID;
-        controller.FirstName = contact.FirstName;
-        controller.LastName = contact.LastName;
-        controller.Email = contact.Email;
-        controller.Phone = contact.Phone;
-        controller.Birthdate = contact.Birthdate;
-        controller.Profile = contact.Profile;
-        controller.Groups = []; //contact.Groups;
+        //Setup the edit form
+        controller.Contact = { Action: "Update", ContactID: contact.ContactID, FirstName: contact.FirstName, LastName: contact.LastName, Email: contact.Email, Phone: contact.Phone, Birthdate: contact.Birthdate, Profile: contact.Profile, Groups: [], Comments: contact.Comments };
         for (var i = 0; i < controller.GroupList.length; i++) {
             controller.GroupList[i].Selected = false;
             for (var j = 0; j < contact.Groups.length; j++) {
                 if (controller.GroupList[i].GroupID == contact.Groups[j].GroupID) {
-                    controller.Groups.push(controller.GroupList[i]);
+                    controller.Contact.Groups.push(controller.GroupList[i]);
                     controller.GroupList[i].Selected = true;
                     break;
                 }
             }
         }
-        controller.Comments = contact.Comments;
         $scope.vwContacts = false;
         $scope.vwContact = true;
+        $('#ProfileImage').val(''); //Clear the file input
     };
     controller.addeditContact = function () {
         //Persist and add to list (i.e. no refresh)
-        var contact;
-        if (controller.Action == "Update") {
-            contact = controller.getContact(controller.ContactID);
-            //contact.ContactID = controller.ContactID;
-            contact.Email = controller.Email;
-            contact.FirstName = controller.FirstName;
-            contact.LastName = controller.LastName;
-            contact.Phone = controller.Phone;
-            contact.Birthdate = controller.Birthdate;
-            contact.Groups = controller.Groups;
-            contact.Comments = controller.Comments;
+        var contact = {};
+        if (controller.Contact.Action == "Update") {
+            contact = controller.getContact(controller.Contact.ContactID);
+            //contact.ContactID = controller.Contact.ContactID;
+            contact.Email = controller.Contact.Email;
+            contact.FirstName = controller.Contact.FirstName;
+            contact.LastName = controller.Contact.LastName;
+            contact.Phone = controller.Contact.Phone;
+            contact.Birthdate = controller.Contact.Birthdate;
+            contact.Groups = controller.Contact.Groups;
+            contact.Comments = controller.Contact.Comments;
             InvontoService.editContact(contact, function (data) {
                 contact.ProfileImage = $scope.fileUrl;
                 InvontoService.uploadProfile(contact, function (data) {
                     contact.Profile = data.profile;
                 });
 
+                for (var i = 0; i < controller.GroupList.length; i++) {
+                    controller.GroupList[i].Selected = false;
+                }
                 $scope.vwContacts = true;
                 $scope.vwContact = false;
                 alert("Contact has been updated.");
             });
         }
         else {
-            contact = { FirstName: controller.FirstName, LastName: controller.LastName, Email: controller.Email, Phone: controller.Phone, Birthdate: controller.Birthdate, Groups: controller.Groups, Comments: controller.Comments }
+            contact = { FirstName: controller.Contact.FirstName, LastName: controller.Contact.LastName, Email: controller.Contact.Email, Phone: controller.Contact.Phone, Birthdate: controller.Contact.Birthdate, Groups: controller.Contact.Groups, Comments: controller.Contact.Comments }
             InvontoService.addContact(contact, function (data) {
                 contact.ContactID = data.id;
                 contact.ProfileImage = $scope.fileUrl;
@@ -100,7 +105,11 @@ invontoApp.controller('InvontoController', function ($scope, InvontoService) {
                     contact.Profile = data.profile;
                 });
 
-                controller.contacts.push(contact);
+                controller.Contacts.push(contact);
+
+                for (var i = 0; i < controller.GroupList.length; i++) {
+                    controller.GroupList[i].Selected = false;
+                }
                 $scope.vwContacts = true;
                 $scope.vwContact = false;
                 alert("Contact has been added.");
@@ -108,16 +117,18 @@ invontoApp.controller('InvontoController', function ($scope, InvontoService) {
         }
     };
     controller.deleteContact = function (contact) {
+        //Delete existing contact
         if(confirm("Are you sure you want to delete this contact?")) {
             InvontoService.deleteContact(contact, function (data) {
-                controller.contacts.pop(contact);
+                controller.Contacts.pop(contact);
                 alert("Contact deleted.");
             });
         }
     };
     controller.getContact = function (id) {
+        //Return a contact from bound controller.Contacts
         var contact = null;
-        angular.forEach(controller.contacts, function(con, key) {
+        angular.forEach(controller.Contacts, function(con, key) {
             if (con.ContactID == id) contact = con;
         })
         return contact;
@@ -181,9 +192,6 @@ invontoApp.factory('InvontoService', ['$q', '$http', function ($q, $http) {
             alert(response);
         });
     };
-    InvontoService.listGroups = function () {
-        return $http.get('/home/listgroups');
-    };
     InvontoService.uploadProfile = function (contact, callback) {
         var formdata = new FormData();
         angular.forEach(contact, function (value, key) {
@@ -204,6 +212,9 @@ invontoApp.factory('InvontoService', ['$q', '$http', function ($q, $http) {
             deferred.reject(status);
         });
         return deferred.promise;
+    };
+    InvontoService.listGroups = function () {
+        return $http.get('/home/listgroups');
     };
     return InvontoService;
 }]);

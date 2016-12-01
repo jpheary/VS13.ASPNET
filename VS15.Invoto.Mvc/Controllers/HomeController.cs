@@ -22,7 +22,7 @@ namespace VS15 {
 
         [HttpGet]
         public JsonResult ViewContacts() {
-            // GET: Contacts
+            //Get a list view of all contacts
             bool proxyCreation = gateway.Configuration.ProxyCreationEnabled;
             try {
                 gateway.Configuration.ProxyCreationEnabled = false;
@@ -32,6 +32,7 @@ namespace VS15 {
                     foreach (Group g in c.Groups) { g.Contacts = null; }
                     _contacts.Add(c);
                 }
+
                 return Json(_contacts, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex) {
@@ -45,6 +46,7 @@ namespace VS15 {
 
         [HttpPost]
         public JsonResult CreateContact(Contact contact) {
+            //Create a new contact
             try {
                 Contact con = new Contact();
                 con.FirstName = contact.FirstName;
@@ -60,9 +62,9 @@ namespace VS15 {
                         if(group != null) con.Groups.Add(group);
                     }
                 }
-
                 gateway.Contacts.Add(con);
                 gateway.SaveChanges();
+
                 return Json(new { success = true, id = con.ContactID });
             }
             catch (Exception ex) {
@@ -73,6 +75,7 @@ namespace VS15 {
 
         [HttpGet]
         public JsonResult ReadContact(int id) {
+            //Get an existing contact
             bool proxyCreation = gateway.Configuration.ProxyCreationEnabled;
             try {
                 gateway.Configuration.ProxyCreationEnabled = false;
@@ -90,6 +93,7 @@ namespace VS15 {
 
         [HttpPost]
         public JsonResult UpdateContact(Contact contact) {
+            //Update an existing contact
             try {
                 int id = Convert.ToInt32(contact.ContactID);
                 var con = gateway.Contacts.Where(c => c.ContactID == id).Include(c => c.Groups).FirstOrDefault();
@@ -106,8 +110,8 @@ namespace VS15 {
                         if (group != null) con.Groups.Add(group);
                     }
                 }
-
                 gateway.SaveChanges();
+
                 return Json(new { success = true, data = (string)null });
             }
             catch (Exception ex) {
@@ -118,11 +122,18 @@ namespace VS15 {
 
         [HttpPost]
         public JsonResult DeleteContact(Contact contact) {
+            //Delete an existing contact
             try {
+                //Delete the contact
                 int id = Convert.ToInt32(contact.ContactID);
                 var con = gateway.Contacts.Where(c => c.ContactID == id).FirstOrDefault();
                 gateway.Contacts.Remove(con);
                 gateway.SaveChanges();
+
+                //Delete the profile image
+                FileInfo fi = new FileInfo(Server.MapPath(contact.Profile));
+                if(fi != null) fi.Delete();
+
                 return Json(new { success = true, data = (string)null });
             }
             catch (Exception ex) {
@@ -133,9 +144,10 @@ namespace VS15 {
 
         [HttpGet]
         public JsonResult ListGroups() {
-            // GET: Contacts
+            //Get a list of all groups
             try {
                 var groups = gateway.Groups.ToList();
+
                 return Json(groups, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex) {
@@ -146,6 +158,7 @@ namespace VS15 {
 
         [HttpPost]
         public JsonResult UploadImage(Contact contact) {
+            //Upload a contact profile image
             try {
                 foreach (string file in Request.Files) {
                     var fileContent = Request.Files[file];

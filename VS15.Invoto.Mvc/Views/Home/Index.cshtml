@@ -7,7 +7,7 @@
     <div id="contacts" ng-controller="InvontoController as controller">
         <div ng-show="vwContacts">
             <ul>
-                <li ng-repeat="contact in controller.contacts">
+                <li ng-repeat="contact in controller.Contacts">
                     <div class="row contact">
                         <div class="col-sm-3">
                             <a href="#" ng-click="controller.editContact(contact)"><img ng-src="{{contact.Profile}}" style="width:100%" /></a>
@@ -62,26 +62,26 @@
             </div>
         </div>
         <div ng-show="vwContact">
-            <p class="divHead">{{controller.Action}} Contact <input type="text" id="ContactID" disabled="disabled" ng-model="controller.ContactID" style="width:25px; border:none; text-align:center" /></p>
+            <p class="divHead">{{controller.Contact.Action}} Contact <input type="text" id="ContactID" disabled="disabled" ng-model="controller.Contact.ContactID" style="width:25px; border:none; text-align:center" /></p>
             <div class="row contact">
                 <div class="col-sm-3">
-                    <img ng-src="{{controller.Profile}}" style="width:100%" />
+                    <img ng-src="{{controller.Contact.Profile}}" style="width:100%" />
                     <br /><br />
-                    <input type="file" name="attachment" file-model="fileUrl" />
+                    <input type="file" id="ProfileImage" name="attachment" file-model="fileUrl" />
                     <br />
-                    <input type="text" id="Email" ng-model="controller.Email" size="100" placeholder="Email"><br />
+                    <input type="text" id="Email" ng-model="controller.Contact.Email" size="100" placeholder="Email"><br />
                     <br />
                 </div>
                 <div class="col-sm-9">
                     <div class="row">
                         <div class="col-sm-4">
-                            <label>First Name</label><br /><input type="text" id="FirstName" ng-model="controller.FirstName" size="30" placeholder="First name"><br />
-                            <label>Last Name</label><br /><input type="text" id="LastName" ng-model="controller.LastName" size="30" placeholder="Last Name"><br />
+                            <label>First Name</label><br /><input type="text" id="FirstName" ng-model="controller.Contact.FirstName" size="30" placeholder="First name"><br />
+                            <label>Last Name</label><br /><input type="text" id="LastName" ng-model="controller.Contact.LastName" size="30" placeholder="Last Name"><br />
                             <br />
                         </div>
                         <div class="col-sm-4">
-                            <label>Phone</label><br /><input type="text" id="Phone" ng-model="controller.Phone" size="12" placeholder="Phone"><br />
-                            <label>Birthdate</label><br /><input type="text" id="Birthdate" ng-model="controller.Birthdate" size="10" placeholder="Birthdate"><br />
+                            <label>Phone</label><br /><input type="text" id="Phone" ng-model="controller.Contact.Phone" size="12" placeholder="Phone"><br />
+                            <label>Birthdate</label><br /><input type="text" id="Birthdate" ng-model="controller.Contact.Birthdate" size="10" placeholder="Birthdate"><br />
                             <br />
                         </div>
                         <div class="col-sm-4">
@@ -95,7 +95,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <label>Comments</label><br />
-                            <textarea id="Comments" ng-model="controller.Comments" size="2000" style="width:100%"></textarea>
+                            <textarea id="Comments" ng-model="controller.Contact.Comments" size="2000" style="width:100%"></textarea>
                         </div>
                     </div>
                 </div>
