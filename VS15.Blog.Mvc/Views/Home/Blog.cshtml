@@ -1,0 +1,498 @@
+﻿@{
+    ViewBag.Title = "Blog";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model VS15.Blog.Models.Blog
+
+<div class="vs15-comments">
+    <h4>@Html.DisplayFor(model => model.Title)</h4>
+    <hr />
+    <div id="blog" class="row">
+        <div class="col-md-3">
+            @Html.DisplayFor(model => model.Author)
+        </div>
+        <div class="col-md-9">
+            @Html.DisplayFor(model => model.Body)
+        </div>
+    </div>
+    <h5>Comments (0)</h5>
+    <hr />
+    <div class="form-group clearfix">
+        <div class="col-md-offset-2 col-md-10">
+            <input class="btn btn-default" type="button" value="Post a Comment" data-bind="click: post" />
+        </div>
+    </div>
+    <div id="comments" data-bind="foreach: comments">
+        <div class="row comment-container comment" data-bind="attr: { id: BlogCommentID() }">
+            <div class="comment-top clearfix">
+                <div class="comment-top-left" data-bind="css: { 'Author-reply': IsBlogAdmin }">
+                    <p data-bind="text: Author"></p>
+                    <p data-bind="text: moment(WhenPosted).format('MM/DD/YYYY h:mm a')"></p>
+                </div>
+            </div>
+            <div class="comment-Body" data-bind="if: Editor().length == 0">
+                <div class="commment-Body-text" data-bind="html: Body()"></div>
+            </div>
+            <div class="comment-Body" data-bind="if: Editor().length > 0">
+                <div class="commment-Body-text" data-bind="attr: { id: 'editor1', html: Body() }"></div>
+            </div>
+            <div class="comment-services" data-bind="if: BlogCommentID() > 0 && Editor().length == 0 && !CanEdit && CanReply">
+                <a class="comment-service" href="#" data-bind='click: $root.reply'>Reply</a>
+            </div>
+            <div class="comment-services" data-bind="if: BlogCommentID() > 0 && Editor().length == 0 && CanEdit">
+                <a class="comment-service" href="#" data-bind='click: $root.reply'>Reply</a>
+                <span>|</span>
+                <a class='comment-service' href="#" data-bind='click: $root.edit'>Edit</a>
+                <span>|</span>
+                <a class="comment-service" href="#" data-bind='click: $root.remove'>Remove</a>
+            </div>
+            <div class="comment-services" data-bind="if: BlogCommentID() == 0 && Editor().length > 0">
+                <a class="comment-service" href="#" data-bind='click: $root.savepost'>Save</a>
+                <span>|</span>
+                <a class="comment-service" href="#" data-bind='click: $root.cancelpost'>Cancel</a>
+            </div>
+            <div class="comment-services" data-bind="if: BlogCommentID() > 0 && Editor().length > 0">
+                <a class="comment-service" href="#" data-bind='click: $root.saveedit'>Save</a>
+                <span>|</span>
+                <a class="comment-service" href="#" data-bind='click: $root.canceledit'>Cancel</a>
+            </div>
+            <div class="comment-note" data-bind="if: moment(LastEdited()).isAfter('0001-01-01')">"This comment was last edited on <span data-bind="text: moment(LastEdited()).format('MM/DD/YYYY hh:mm a')"></span></div>
+            <div class="reply-comments" data-bind="foreach: ReplyComments">
+                <div class="row comment">
+                    <div class="comment-top clearfix">
+                        <div class="comment-top-left" data-bind="css: { 'Author-reply': IsBlogAdmin }">
+                            <p data-bind="text: Author"></p>
+                            <p data-bind="text: moment(WhenPosted).format('MM/DD/YYYY h:mm a')"></p>
+                        </div>
+                    </div>
+                    <div class="comment-Body" data-bind="if: Editor().length == 0">
+                        <div class="commment-Body-text" data-bind="html: Body()"></div>
+                    </div>
+                    <div class="comment-Body" data-bind="if: Editor().length != 0">
+                        <div class="commment-Body-text" data-bind="attr: { id: 'editor1', html: Body() }"></div>
+                    </div>
+                    <div class="comment-services" data-bind="if: BlogCommentID() > 0 && Editor().length == 0 && CanEdit">
+                        <a class='comment-service' href="#" data-bind='click: $root.edit'>Edit</a>
+                        <span>|</span>
+                        <a class="comment-service" href="#" data-bind='click: $root.removereply'>Remove</a>
+                    </div>
+                    <div class="comment-services" data-bind="if: BlogCommentID() == 0 && Editor().length > 0">
+                        <a class="comment-service" href="#" data-bind='click: $root.savereply'>Save</a>
+                        <span>|</span>
+                        <a class="comment-service" href="#" data-bind='click: $root.cancelreply'>Cancel</a>
+                    </div>
+                    <div class="comment-services" data-bind="if: BlogCommentID() > 0 && Editor().length > 0">
+                        <a class="comment-service" href="#" data-bind='click: $root.saveedit'>Save</a>
+                        <span>|</span>
+                        <a class="comment-service" href="#" data-bind='click: $root.canceledit'>Cancel</a>
+                    </div>
+                    <div class="comment-note" data-bind="if: moment(LastEdited()).isAfter('0001-01-01')">"This comment was last edited on <span data-bind="text: moment(LastEdited()).format('MM/DD/YYYY hh:mm a')"></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input class="btn btn-default" type="button" value="Post a Comment" data-bind="click: post" />
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //Load comments
+            VS15.BlogModel.LoadComments(@Model.BlogID, function (data) {
+                //Bind client viewmodel to view
+                var viewmodel = null;
+                ko.applyBindings(viewmodel = new window.VS15.CommentViewModel(data, VS15.BlogModel));
+
+                //Update comment count and re-shade
+                $('.vs15-comments h5').html("Comments (" + $('#comments div.comment').length + "):");
+                $("#comments div.comment-container").removeClass("comment-shade");
+                $('#comments div.comment-container').each(function (i, el) {
+                    if (i % 2 === 0) {
+                        $(el).addClass("comment-shade");
+                    }
+                });
+
+                //Start auto refresh
+                //viewmodel.refresh();
+            });
+        });
+
+        window.VS15 = window.VS15 || {};
+        window.VS15.CommentViewModel = function (data, model) {
+            var self = this;
+            //var model = model;
+            var pendingcomment = null;
+            var lastupdated = moment().format('MM/DD/YYYY HH:mm');
+
+            self.comments = ko.observableArray(ko.utils.arrayMap(data, function (comment) {
+                return {
+                    BlogCommentID: ko.observable(comment.BlogCommentID),
+                    Author: comment.Author,
+                    IsBlogAdmin: comment.IsBlogAdmin,
+                    Body: ko.observable(comment.Body),
+                    WhenPosted: comment.WhenPosted,
+                    LastEdited: ko.observable(comment.LastEdited),
+                    EditedBy: comment.EditedBy,
+                    ResponseToComment: comment.ResponseToComment,
+                    IsApproved: comment.IsApproved,
+                    BlogId: comment.BlogId,
+                    ReplyComments: ko.observableArray(ko.utils.arrayMap(comment.ReplyComments, function (replycomment) {
+                        return {
+                            BlogCommentID: ko.observable(replycomment.BlogCommentID),
+                            Author: replycomment.Author,
+                            IsBlogAdmin: replycomment.IsBlogAdmin,
+                            Body: ko.observable(replycomment.Body),
+                            WhenPosted: replycomment.WhenPosted,
+                            LastEdited: ko.observable(replycomment.LastEdited),
+                            EditedBy: replycomment.EditedBy,
+                            IsApproved: replycomment.IsApproved,
+                            BlogId: replycomment.BlogId,
+                            ReplyComments: replycomment.ReplyComments,
+                            Editor: ko.observable(""),
+                            CanReply: true,
+                            CanEdit: true
+                        };
+                    })),
+                    Editor: ko.observable(""),
+                    CanReply: true,
+                    CanEdit: true
+                };
+            }));
+
+            self.readany = function (commentId){
+                //Return a comment or reply comment
+                var c;
+                $.each(self.comments(), function () {
+                    if (this.BlogCommentID() == commentId) {
+                        c = this;
+                    }
+                    else {
+                        $.each(this.replyComments(), function () {
+                            if (this.BlogCommentID() == commentId)
+                                c = this;
+                        });
+                    }
+                });
+                return c;
+            };
+            self.read = function (commentId){
+                //Return a comment
+                return ko.utils.arrayFirst(self.comments(), function (comment) {
+                    if (comment.BlogCommentID() == commentId) {
+                        return comment;
+                    }
+                });
+            };
+            self.readreply = function (commentId){
+                //Return a reply comment
+                var c;
+                $.each(self.comments(), function () {
+                    $.each(this.ReplyComments(), function () {
+                        if (this.BlogCommentID() == commentId)
+                            c = this;
+                    });
+                });
+                return c;
+            };
+            self.post = function () {
+                //Insert a new comment (not persisted yet)
+                if(self.cancelpending()) {
+                    pendingcomment = {
+                        BlogCommentID: ko.observable(0),
+                        Author: "author",
+                        IsBlogAdmin: false,
+                        Body: ko.observable(""),
+                        WhenPosted: moment().format('MM/DD/YYYY hh:mm'),
+                        LastEdited: ko.observable(""),
+                        EditedBy: "",
+                        ResponseToComment: 0,
+                        IsApproved: true,
+                        BlogId: @Model.BlogID,
+                        ReplyComments: ko.observableArray(),
+                        Editor: ko.observable("editor1"),
+                        CanReply: true,
+                        CanEdit: true
+                    };
+                    pendingcomment.action = "post";
+                    self.comments.push(pendingcomment);
+                    Controls.CKEditor.CreateEditor("");
+                }
+            };
+            self.savepost = function (comment) {
+                //Save the specified new comment from self.post
+                var html = Controls.CKEditor.RemoveEditor();
+                comment.Body(html);
+                model.CreateComment(comment, function (data) {
+                    //Update view model to set comment id and hide editor on success
+                    comment.BlogCommentID(data.commentid);
+                    comment.Editor("");
+                    self.reshade();
+                    pendingcomment = null;
+                });
+            };
+            self.cancelpost = function (comment) {
+                //Cancel the specified new comment from self.post
+                Controls.CKEditor.RemoveEditor();
+                comment.Editor("");
+                self.comments.remove(comment);
+                pendingcomment = null;
+            };
+            self.reply = function (comment) {
+                //Insert a new reply comment (not persisted yet)
+                if(self.cancelpending()) {
+                    pendingcomment = {
+                        BlogCommentID: ko.observable(0),
+                        Author: "author",
+                        IsBlogAdmin: false,
+                        Body: ko.observable(""),
+                        WhenPosted: moment().format('MM/DD/YYYY hh:mm'),
+                        LastEdited: ko.observable(""),
+                        EditedBy: "",
+                        ResponseToComment: 0,
+                        IsApproved: true,
+                        BlogId: @Model.BlogID,
+                        ReplyComments: null,
+                        Editor: ko.observable("editor1"),
+                        CanReply: true,
+                        CanEdit: true
+                    };
+                    pendingcomment.action = "reply";
+                    comment.ReplyComments.push(pendingcomment);
+                    Controls.CKEditor.CreateEditor("");
+                }
+            };
+            self.savereply = function (comment) {
+                //Save a new reply comment from self.reply
+                var html = Controls.CKEditor.RemoveEditor();
+                comment.Body(html);
+                model.CreateReplyComment(comment, function (data) {
+                    //Update view model to set commentid and hide editor on success
+                    comment.BlogCommentID(data.commentid);
+                    comment.Editor("");
+                    self.reshade();
+                    pendingcomment = null;
+                });
+            };
+            self.cancelreply = function (comment) {
+                //Cancel a new reply comment from self.reply
+                Controls.CKEditor.RemoveEditor();
+                comment.Editor("");
+                $.each(self.comments(), function () { this.ReplyComments.remove(comment) })
+                pendingcomment = null;
+            };
+            self.edit = function (comment) {
+                //Edit the specified comment
+                if(self.cancelpending()) {
+                    pendingcomment = comment;
+                    pendingcomment.action = "edit";
+                    comment.Editor("editor1");
+                    Controls.CKEditor.CreateEditor(comment.Body());
+                }
+            };
+            self.saveedit = function (comment) {
+                //Update the specified comment from self.edit
+                var html = Controls.CKEditor.RemoveEditor();
+                comment.body(html);
+                model.UpdateComment(comment, function (data) {
+                    //Update view model to set last edited and hide the Editor on success
+                    comment.LastEdited(data.LastEdited);
+                    comment.Editor("");
+                    pendingcomment = null;
+                });
+            };
+            self.canceledit = function (comment) {
+                //Cancel the specified comment from self.edit
+                Controls.CKEditor.RemoveEditor();
+                comment.Editor("");
+                pendingcomment = null;
+            };
+            self.removereply = function (comment) {
+                //Remove the specified reply comment
+                if (confirm('Remove this blog reply comment?')) {
+                    model.RemoveComment(comment, function () {
+                        //Update view model to remove comment on success
+                        $.each(self.comments(), function () { this.replyComments.remove(comment) });
+                        self.reshade();
+                    });
+                }
+            };
+            self.remove = function (comment) {
+                //Remove the specified comment
+                if (confirm('Remove this blog comment?')) {
+                    model.RemoveComment(comment, function () {
+                        //Update view model to remove comment on success
+                        self.comments.remove(comment);
+                        self.reshade();
+                    });
+                }
+            };
+            self.save = function () {
+                //Save the entire blog
+            };
+            self.cancelpending = function () {
+                //Cancel any pending action (i.e. post, reply, edit)
+                if (pendingcomment) {
+                    // If the editor has changes, ask the user first.
+                    if (Controls.CKEditor.EditorIsDirty()) {
+                        var subject = 'comment';
+                        switch (pendingcomment) {
+                            case 'new':
+                                subject = 'new comment';
+                                break;
+                            case 'reply':
+                                subject = 'reply';
+                                break;
+                            case 'edit':
+                                subject = 'edit';
+                                break;
+                        }
+                        if (!confirm("Do you really want to cancel your " + subject + "?")) {
+                            return false;
+                        }
+                    }
+
+                    if (pendingcomment != null) {
+                        switch (pendingcomment.action) {
+                            case "post":
+                                Controls.CKEditor.RemoveEditor();
+                                pendingcomment.Editor("");
+                                self.comments.remove(pendingcomment);
+                                break;
+                            case "reply":
+                                Controls.CKEditor.RemoveEditor();
+                                pendingcomment.Editor("");
+                                $.each(self.comments(), function () { this.replyComments.remove(pendingcomment) })
+                                break;
+                            case "edit":
+                                Controls.CKEditor.RemoveEditor();
+                                pendingcomment.Editor("");
+                                break;
+                        }
+                    }
+                    pendingcomment = null;
+                }
+
+                return true;
+            };
+            self.reshade = function () {
+                //Update comment count and re-shade
+                $('.vs15-comments h5').html("Comments (" + $('#comments div.comment').length + "):");
+                $("#comments div.comment-container").removeClass("comment-shade");
+                $('#comments div.comment-container').each(function (i, el) {
+                    if (i % 2 === 0) {
+                        $(el).addClass("comment-shade");
+                    }
+                });
+            };
+        };
+
+        window.VS15.BlogModel = {
+            LoadComments: function (BlogId, callback) {
+                $.ajax({
+                    type: "GET",
+                    url: '/api/blogcomments/' + BlogId,
+                    contentType: "application/json; charset=utf-8",
+                    //data: param = { action: "load", entryid: BlogId },
+                    dataType: "json",
+                    beforeSend: function () { $("Body").css("cursor", "wait"); },
+                    success: function (data, status, xhr) {
+                        callback(data);
+                    },
+                    error: function (xhr, status, error) {
+                        alert('An error has occurred: ' + error + '.');
+                    },
+                    complete: function (xhr, status) { $("Body").css("cursor", "default"); }
+                });
+            },
+            CreateComment: function (comment, callback) {
+            },
+            CreateReplyComment: function (comment, callback) {
+            },
+            UpdateComment: function (comment, callback) {
+            },
+            RemoveComment: function (comment, callback) {
+            }
+        };
+
+        window.Controls = window.Controls || {};
+        window.Controls.CKEditor = {
+            // The single editor instance. Treat this as private.
+            _editor1: null,
+            // CKEditor configuration
+            _config: {
+                toolbar: [['Bold', 'Italic', 'Link', 'Unlink']],
+                height: 100,
+                linkShowAdvancedTab: false,
+                linkShowTargetTab: false
+            },
+            CreateEditor: function (html, isloading) {
+                // Run some initialization code only once, before the first editor is created
+                if (!this._initialized) {
+                    CKEDITOR.on('dialogDefinition', function (ev) {
+                        // Remove Link Type and Browse Server from the link dialog, and restrict the available protocols.
+                        if (ev.data.name == 'link') {
+                            var info = ev.data.definition.getContents('info');
+                            info.get('linkType').style = 'display: none';
+                            info.remove('browse');
+                            info.get('protocol').items = [['http://', 'http://'], ['https://', 'https://']];
+                        }
+                    });
+                    this._initialized = true;
+                }
+                //Create a new editor instance inside the <div id="editor"> element, setting its value to html.
+                if (this._editor1) {
+                    this._editor1.destroy();
+                    this._editor1 = null;
+                }
+                this._editor1 = CKEDITOR.appendTo('editor1', this._config, html);
+
+                // Chrome automatically scrolls down so the editor is behind the editor. Firefox doesn't automatically
+                // scroll at all. Other browsers do whatever they do. So just always scroll properly.
+                if (!isloading) {
+                    // This only works consistently if page has already loaded (in other words, we aren't reacting to the query string).
+                    this._editor1.focus();
+                    $('html, body').animate({ scrollTop: $('#editor1').offset().top - 150 }, 500);
+                } else {
+                    // This is a lot of effort for something that should be simple. About 10 times over the next second we
+                    // monitor any automatic scrolling that happens. Right after any automatic scrolling, we force-scroll
+                    // to where we want (to reduce visible jumps). Finally, at the end of the second we scroll (again) no matter what.
+                    var editor = this._editor1;
+                    var oldScrollTop = $(window).scrollTop();
+                    var repetitions = 0;
+                    var intervalId = setInterval(function () {
+                        repetitions += 1;
+                        var done = repetitions >= 10;
+                        if (oldScrollTop != $(window).scrollTop() || done) {
+                            $('html, body').scrollTop(oldScrollTop = $('#editor1').offset().top - 150);
+                            editor.focus();
+                        }
+                        if (done) {
+                            clearInterval(intervalId);
+                        }
+                    }, 100);
+                }
+            },
+            RemoveEditor: function () {
+                //Retrieve the editor content and destroy the editor
+                var html = "";
+                if (this._editor1) {
+                    html = this._editor1.getData(false);
+                    this._editor1.destroy();
+                    this._editor1 = null;
+                }
+                return html;
+            },
+            EditorIsDirty: function () {
+                if (this._editor1) {
+                    return this._editor1.checkDirty();
+                } else {
+                    return false;
+                }
+            }
+        };
+    </script>
+}

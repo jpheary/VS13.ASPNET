@@ -1,0 +1,114 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+#comments .comment {
+	padding: 10px;
+    line-height: 16px;
+	border-bottom: 0px solid #ccc;
+}
+#comments .comment-shade {
+    background-color: #eee;
+}
+
+#comments .comment .comment-top { }
+#comments .comment .comment-top .comment-top-left {
+	float: left;    
+}
+#comments .comment .comment-top .comment-top-left > p {
+	margin-bottom: 2px;
+    color: #999;
+    font-size:12px;
+}
+#comments .comment .comment-top .comment-top-left > p > span {
+	font-size: 11px;
+	text-transform: none;
+	font-weight: 300;
+	font-style: italic;
+}
+#comments .comment .comment-top .comment-top-right {
+	float: right;
+}
+#comments .comment .comment-top .comment-top-right > p {
+	margin-bottom: 2px;
+    color: #999;
+}
+@media all and (max-width:480px) {
+    #comments .comment .comment-top .comment-top-right {
+	    float: left;
+    }
+}
+#comments .comment .comment-top .author-reply {
+	font-style: italic;
+	background: url('/images/design/icon-fuhrman-comment.png') no-repeat left top;
+}
+#comments .comment .comment-top .author-reply > p {
+    padding-left: 25px;
+    color: #999;
+	font-size: 11px;
+	text-transform: uppercase;
+	font-style: normal;
+}
+#comments .comment .comment-top .author-reply > p:first-child {
+    font-weight: bold;
+}
+
+#comments .comment .comment-body > textarea {
+	width: 98%;
+    margin: 0px 0px;
+    resize: none;
+    overflow: hidden;
+	font-family:'Noto Sans', Verdana, Arial, Helvetica, sans-serif;
+}
+
+#comments .comment .comment-services {
+	width: 100%; 
+    margin-top: 10px;
+	margin-bottom: 10px;
+    font-size: 10px;
+    color: #999;
+}	
+#comments .comment .comment-services > a {
+    color: #999;
+}	
+#comments .comment .comment-services > a:visited {
+    color: #999;
+}	
+#comments .comment .comment-note {
+	font-style: italic;
+    color: #999;
+}	
+
+
+#comments .comment .reply-comments {
+	margin: 10px 0px 0px 25px;
+}
+#comments .comment .reply-comments .comment {
+	margin-left: 25px;
+	border-top: 1px solid #ccc;
+}
+.commment-body-text{
+     font-size:14px;
+     line-height:22px;
+}

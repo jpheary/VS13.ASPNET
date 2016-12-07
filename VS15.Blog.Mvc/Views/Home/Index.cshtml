@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "Blog Page";
+}
+@model IEnumerable<VS15.Blog.Models.Blog>
+
+<h2>Blog Posts</h2>
+<div>
+    @foreach (var blog in Model) {
+        <div class="row">
+            <div class="col-md-3">
+                @Html.ActionLink(blog.Title, "Blog", new { id = blog.BlogID }, new { id = "linkId", title = "Click here to view this blog." })
+                <br />
+            </div>
+            <div class="col-md-9">
+                @Html.DisplayNameFor(model => model.Author) : @Html.DisplayFor(modelItem => blog.Author)<br />
+                <br />
+            </div>
+        </div>
+    }
+</div>
