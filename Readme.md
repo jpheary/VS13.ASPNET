@@ -2,7 +2,7 @@ VS13.ASP.NET
 Overview
 Exploring ASP.NET 4.5.1 using Visual Studio 2013/2015.
 
-Projects
+
 VS15.Inoto.Mvc
 Contacts management application using ASP.NET (C#), MVC, Entity Framework, Angular.js, SQL Server, Bootstrap. Add/Edit/Delete contacts using AngularJs using AJAX to communicate with the MVC-Entity backend.
 
