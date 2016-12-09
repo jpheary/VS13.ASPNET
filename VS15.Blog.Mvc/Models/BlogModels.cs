@@ -13,7 +13,9 @@ namespace VS15.Blog.Models {
         public virtual string Title { get; set; }
         [Required(ErrorMessage = "Author is required.")]
         public virtual string Author { get; set; }
-        [Required(ErrorMessage = "Body is required.")]
+        [Required(ErrorMessage = "Author is required.")]
+        public virtual DateTime WhenPosted { get; set; }
+        [Required(ErrorMessage = "Date posted is required.")]
         public virtual string Body { get; set; }
     }
 
@@ -21,14 +23,11 @@ namespace VS15.Blog.Models {
         [Key]
         public virtual int BlogCommentID { get; set; }
         public virtual string Author { get; set; }
-        public virtual bool IsBlogAdmin { get; set; }
         public virtual string Body { get; set; }
         public virtual DateTime WhenPosted { get; set; }
         public virtual DateTime? LastEdited { get; set; }
-        public virtual long? EditedBy { get; set; }
-        public virtual long? ResponseToComment { get; set; }
+        public virtual int? ParentCommentID { get; set; }
         public virtual DateTime TimeStamp { get; set; }
-        public virtual bool IsApproved { get; set; }
         public int BlogId { get; set; }
         [ForeignKey("BlogId")]
         public Blog Blog { get; set; }

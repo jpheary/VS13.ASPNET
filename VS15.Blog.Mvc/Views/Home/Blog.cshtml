@@ -9,23 +9,24 @@
     <hr />
     <div id="blog" class="row">
         <div class="col-md-3">
-            @Html.DisplayFor(model => model.Author)
+            @Html.DisplayNameFor(model => model.Author) : @Html.DisplayFor(model => model.Author)
         </div>
         <div class="col-md-9">
             @Html.DisplayFor(model => model.Body)
         </div>
     </div>
-    <h5>Comments (0)</h5>
+    <h5>Comments : 0</h5>
     <hr />
-    <div class="form-group clearfix">
-        <div class="col-md-offset-2 col-md-10">
+    <div class="comments-header clearfix">
+        <div class="comments-header-right clearfix">
             <input class="btn btn-default" type="button" value="Post a Comment" data-bind="click: post" />
         </div>
     </div>
+    <br />
     <div id="comments" data-bind="foreach: comments">
         <div class="row comment-container comment" data-bind="attr: { id: BlogCommentID() }">
             <div class="comment-top clearfix">
-                <div class="comment-top-left" data-bind="css: { 'Author-reply': IsBlogAdmin }">
+                <div class="comment-top-left">
                     <p data-bind="text: Author"></p>
                     <p data-bind="text: moment(WhenPosted).format('MM/DD/YYYY h:mm a')"></p>
                 </div>
@@ -60,7 +61,7 @@
             <div class="reply-comments" data-bind="foreach: ReplyComments">
                 <div class="row comment">
                     <div class="comment-top clearfix">
-                        <div class="comment-top-left" data-bind="css: { 'Author-reply': IsBlogAdmin }">
+                        <div class="comment-top-left">
                             <p data-bind="text: Author"></p>
                             <p data-bind="text: moment(WhenPosted).format('MM/DD/YYYY h:mm a')"></p>
                         </div>
@@ -92,8 +93,8 @@
         </div>
     </div>
     <br />
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
+    <div id="commentsheaderbottom" class="comments-header clearfix">
+        <div class="comments-header-right clearfix">
             <input class="btn btn-default" type="button" value="Post a Comment" data-bind="click: post" />
         </div>
     </div>
@@ -108,7 +109,7 @@
                 ko.applyBindings(viewmodel = new window.VS15.CommentViewModel(data, VS15.BlogModel));
 
                 //Update comment count and re-shade
-                $('.vs15-comments h5').html("Comments (" + $('#comments div.comment').length + "):");
+                $('.vs15-comments h5').html("Comments : " + $('#comments div.comment').length);
                 $("#comments div.comment-container").removeClass("comment-shade");
                 $('#comments div.comment-container').each(function (i, el) {
                     if (i % 2 === 0) {
@@ -132,25 +133,19 @@
                 return {
                     BlogCommentID: ko.observable(comment.BlogCommentID),
                     Author: comment.Author,
-                    IsBlogAdmin: comment.IsBlogAdmin,
                     Body: ko.observable(comment.Body),
                     WhenPosted: comment.WhenPosted,
                     LastEdited: ko.observable(comment.LastEdited),
-                    EditedBy: comment.EditedBy,
-                    ResponseToComment: comment.ResponseToComment,
-                    IsApproved: comment.IsApproved,
+                    ParentCommentID: comment.ParentCommentID,
                     BlogId: comment.BlogId,
                     ReplyComments: ko.observableArray(ko.utils.arrayMap(comment.ReplyComments, function (replycomment) {
                         return {
                             BlogCommentID: ko.observable(replycomment.BlogCommentID),
                             Author: replycomment.Author,
-                            IsBlogAdmin: replycomment.IsBlogAdmin,
                             Body: ko.observable(replycomment.Body),
                             WhenPosted: replycomment.WhenPosted,
                             LastEdited: ko.observable(replycomment.LastEdited),
-                            EditedBy: replycomment.EditedBy,
-                            ResponseToComment: replycomment.ResponseToComment,
-                            IsApproved: replycomment.IsApproved,
+                            ParentCommentID: replycomment.ParentCommentID,
                             BlogId: replycomment.BlogId,
                             ReplyComments: replycomment.ReplyComments,
                             Editor: ko.observable(""),
@@ -204,14 +199,11 @@
                 if(self.cancelpending()) {
                     pendingcomment = {
                         BlogCommentID: ko.observable(0),
-                        Author: "jpHeary",
-                        IsBlogAdmin: false,
+                        Author: "unknown",
                         Body: ko.observable(""),
                         WhenPosted: moment().format('MM/DD/YYYY hh:mm'),
                         LastEdited: ko.observable(""),
-                        EditedBy: "",
-                        ResponseToComment: 0,
-                        IsApproved: true,
+                        ParentCommentID: 0,
                         BlogId: @Model.BlogID,
                         ReplyComments: ko.observableArray(),
                         Editor: ko.observable("editor1"),
@@ -247,14 +239,11 @@
                 if(self.cancelpending()) {
                     pendingcomment = {
                         BlogCommentID: ko.observable(0),
-                        Author: "jpHeary",
-                        IsBlogAdmin: false,
+                        Author: "unknown",
                         Body: ko.observable(""),
                         WhenPosted: moment().format('MM/DD/YYYY hh:mm'),
                         LastEdited: ko.observable(""),
-                        EditedBy: "",
-                        ResponseToComment: comment.BlogCommentID(),
-                        IsApproved: true,
+                        ParentCommentID: comment.BlogCommentID(),
                         BlogId: @Model.BlogID,
                         ReplyComments: null,
                         Editor: ko.observable("editor1"),
@@ -299,8 +288,7 @@
                 var html = Controls.CKEditor.RemoveEditor();
                 comment.Body(html);
                 comment.LastEdited(moment().format('MM/DD/YYYY hh:mm'));
-                comment.EditedBy = "0";
-            model.UpdateComment(comment, function (data) {
+                model.UpdateComment(comment, function (data) {
                     //Update view model to hide the Editor on success
                     comment.Editor("");
                     pendingcomment = null;
@@ -382,7 +370,7 @@
             };
             self.reshade = function () {
                 //Update comment count and re-shade
-                $('.vs15-comments h5').html("Comments (" + $('#comments div.comment').length + "):");
+                $('.vs15-comments h5').html("Comments : " + $('#comments div.comment').length);
                 $("#comments div.comment-container").removeClass("comment-shade");
                 $('#comments div.comment-container').each(function (i, el) {
                     if (i % 2 === 0) {
@@ -414,7 +402,7 @@
                     type: "POST",
                     url: '/api/blogcomments',
                     contentType: "application/json; charset=UTF-8",
-                    data: JSON.stringify({BlogCommentID:comment.BlogCommentID(),Author:comment.Author,IsBlogAdmin:comment.IsBlogAdmin,Body:comment.Body(),WhenPosted:comment.WhenPosted,IsApproved:comment.IsApproved,BlogId:comment.BlogId}),
+                    data: JSON.stringify({BlogCommentID:comment.BlogCommentID(),Author:comment.Author,Body:comment.Body(),WhenPosted:comment.WhenPosted,BlogId:comment.BlogId}),
                     dataType: "json",
                     beforeSend: function () { $("body").css("cursor", "wait"); },
                     success: function (data, status, xhr) {
@@ -431,7 +419,7 @@
                     type: "POST",
                     url: '/api/blogcomments/',
                     contentType: "application/json; charset=UTF-8",
-                    data: JSON.stringify({BlogCommentID:comment.BlogCommentID(),Author:comment.Author,IsBlogAdmin:comment.IsBlogAdmin,Body:comment.Body(),WhenPosted:comment.WhenPosted,ResponseToComment:comment.ResponseToComment,IsApproved:comment.IsApproved,BlogId:comment.BlogId}),
+                    data: JSON.stringify({BlogCommentID:comment.BlogCommentID(),Author:comment.Author,Body:comment.Body(),WhenPosted:comment.WhenPosted,ParentCommentID:comment.ParentCommentID,BlogId:comment.BlogId}),
                     dataType: "json",
                     beforeSend: function () { $("body").css("cursor", "wait"); },
                     success: function (data, status, xhr) {
@@ -448,7 +436,7 @@
                     type: "PUT",
                     url: '/api/blogcomments/' + comment.BlogCommentID(),
                     contentType: "application/json; charset=UTF-8",
-                    data: JSON.stringify({BlogCommentID:comment.BlogCommentID(),Author:comment.Author,IsBlogAdmin:comment.IsBlogAdmin,Body:comment.Body(),WhenPosted:comment.WhenPosted,LastEdited:comment.LastEdited(),EditedBy:comment.EditedBy,ResponseToComment:comment.ResponseToComment,IsApproved:comment.IsApproved,BlogId:comment.BlogId}),
+                    data: JSON.stringify({BlogCommentID:comment.BlogCommentID(),Author:comment.Author,Body:comment.Body(),WhenPosted:comment.WhenPosted,LastEdited:comment.LastEdited(),ParentCommentID:comment.ParentCommentID,BlogId:comment.BlogId}),
                     dataType: "json",
                     beforeSend: function () { $("body").css("cursor", "wait"); },
                     success: function (data, status, xhr) {

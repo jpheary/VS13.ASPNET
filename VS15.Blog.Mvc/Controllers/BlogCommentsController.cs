@@ -22,11 +22,11 @@ namespace VS15.Blog.Controllers {
 
             //Load all comments (no login required)
             List<BlogCommentView> blogComments = new List<BlogCommentView>();
-            BlogComment[] approvedcomments = gateway.BlogComments.Where(b => b.BlogId == id && b.IsApproved).ToArray();
+            BlogComment[] approvedcomments = gateway.BlogComments.Where(b => b.BlogId == id).ToArray();
             foreach (BlogComment comment in approvedcomments) {
-                if (comment.ResponseToComment == null || comment.ResponseToComment < 1) {
+                if (comment.ParentCommentID == null || comment.ParentCommentID < 1) {
                     //Parent comment
-                    BlogComment[] replyComments = approvedcomments.Where(w => w.ResponseToComment == comment.BlogCommentID).ToArray();
+                    BlogComment[] replyComments = approvedcomments.Where(w => w.ParentCommentID == comment.BlogCommentID).ToArray();
                     blogComments.Add(new BlogCommentView(comment, replyComments));
                 }
             }
@@ -82,9 +82,9 @@ namespace VS15.Blog.Controllers {
             }
             //Remove comment
             gateway.BlogComments.Remove(blogComment);
-            if (blogComment.ResponseToComment == null) {
+            if (blogComment.ParentCommentID == null) {
                 //Remove all reply comments as well
-                BlogComment[] replys = gateway.BlogComments.Where(bc => bc.ResponseToComment == blogComment.BlogCommentID).ToArray();
+                BlogComment[] replys = gateway.BlogComments.Where(bc => bc.ParentCommentID == blogComment.BlogCommentID).ToArray();
                 foreach (BlogComment reply in replys) {
                     gateway.BlogComments.Remove(reply);
                 }

@@ -22,6 +22,14 @@ namespace VS15.Blog.Models {
         //Interface
         protected override void Seed(BlogGateway context) {
             //
+            context.Blogs.Add(
+                new Blog {
+                    Title = "A Test Blog Post",
+                    Author = "jpHeary",
+                    WhenPosted = DateTime.Now,
+                    Body = "This is the body of this test blog post; a blog about nothing."
+                }
+            );
             base.Seed(context);
         }
     }

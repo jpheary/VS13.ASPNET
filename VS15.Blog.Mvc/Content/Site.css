@@ -23,6 +23,23 @@ textarea {
     max-width: 280px;
 }
 
+.vs15-comments .comments-header {
+	padding:10px;
+	color:#fff;
+}
+.vs15-comments .comments-header-right {
+	float: right;
+	width: 70%;
+	text-align: right;
+}
+@media all and (max-width:480px) {
+    .vs15-comments .comments-header-right {
+	    float: none;
+	    width: 100%;
+	    text-align: left;
+    }
+}
+
 #comments .comment {
 	padding: 10px;
     line-height: 16px;
