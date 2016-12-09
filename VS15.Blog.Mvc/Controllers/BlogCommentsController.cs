@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Description;
 using VS15.Blog.Models;
 
 namespace VS15.Blog.Controllers {
@@ -13,16 +16,9 @@ namespace VS15.Blog.Controllers {
         private BlogGateway gateway = new BlogGateway();
 
         //Interface
-        [Route("")]
-        [System.Web.Http.HttpGet]
-        public IEnumerable<BlogComment> ViewComments() {
-            return gateway.BlogComments;
-        }
-        [System.Web.Http.HttpGet]
         public IList<BlogCommentView> Get(int id) {
-            // GET api/<blogcomments>/5
+            // GET api/blogcomments/5
             //Load all comments for the specified blog
-            //return gateway.BlogComments.Where(b => b.BlogId == id);
 
             //Load all comments (no login required)
             List<BlogCommentView> blogComments = new List<BlogCommentView>();
@@ -36,37 +32,77 @@ namespace VS15.Blog.Controllers {
             }
             return blogComments.ToList();
         }
-    }
 
-    public class BlogCommentView {
-        //Instance
-        private BlogComment mComment = null;
-        private List<BlogCommentView> mReplyComments = null;
+        public IQueryable<BlogComment> GetBlogComments() {
+            // GET: api/blogcomments
+            return gateway.BlogComments;
+        }
 
-        public BlogCommentView(BlogComment comment, BlogComment[] replyComments) {
-            //Constructor
-            this.mComment = comment;
 
-            this.mReplyComments = new List<BlogCommentView>();
-            if (replyComments != null) {
-                foreach (BlogComment replycomment in replyComments) {
-                    this.mReplyComments.Add(new BlogCommentView(replycomment, null));
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutBlogComment(int id, BlogComment blogComment) {
+            // PUT: api/blogcomments/5
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (id != blogComment.BlogCommentID) return BadRequest();
+
+            gateway.Entry(blogComment).State = EntityState.Modified;
+            try {
+                blogComment.TimeStamp = DateTime.Now;
+                gateway.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException) {
+                if (!BlogCommentExists(id)) 
+                    return NotFound();
+                else 
+                    throw;
+            }
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        [ResponseType(typeof(BlogComment))]
+        public IHttpActionResult PostBlogComment(BlogComment blogComment) {
+            // POST: api/blogcomments
+            if (!ModelState.IsValid) {
+                return BadRequest(ModelState);
+            }
+
+            blogComment.TimeStamp = DateTime.Now;
+            gateway.BlogComments.Add(blogComment);
+            gateway.SaveChanges();
+
+            return CreatedAtRoute("DefaultApi", new { id = blogComment.BlogCommentID }, blogComment);
+        }
+
+        [ResponseType(typeof(BlogComment))]
+        public IHttpActionResult DeleteBlogComment(int id) {
+            // DELETE: api/blogcomments/5
+            BlogComment blogComment = gateway.BlogComments.Find(id);
+            if (blogComment == null) {
+                return NotFound();
+            }
+            //Remove comment
+            gateway.BlogComments.Remove(blogComment);
+            if (blogComment.ResponseToComment == null) {
+                //Remove all reply comments as well
+                BlogComment[] replys = gateway.BlogComments.Where(bc => bc.ResponseToComment == blogComment.BlogCommentID).ToArray();
+                foreach (BlogComment reply in replys) {
+                    gateway.BlogComments.Remove(reply);
                 }
             }
-        }
-        public long BlogCommentID { get { return this.mComment.BlogCommentID; } }
-        public string Author { get { return this.mComment.Author; } }
-        public bool IsBlogAdmin { get { return this.mComment.IsBlogAdmin; } }
-        public string Body { get { return this.mComment.Body; } }
-        public string WhenPosted { get { return this.mComment.WhenPosted.ToString("MM/dd/yyyy HH:mm"); } }
-        public string LastEdited { get { return this.mComment.LastEdited != null ? this.mComment.LastEdited.GetValueOrDefault().ToString("MM/dd/yyyy HH:mm") : ""; } }
-        public long EditedBy { get { return this.mComment.EditedBy != null ? this.mComment.EditedBy.GetValueOrDefault() : 0; } }
-        public long ResponseToComment { get { return this.mComment.ResponseToComment ?? 0; } }
-        public string TimeStamp { get { return this.mComment.TimeStamp.ToString("MM/dd/yyyy HH:mm:ss"); } }
-        public bool IsApproved { get { return this.mComment.IsApproved; } }
-        public long BlogId { get { return this.mComment.BlogId; } }
-        public List<BlogCommentView> ReplyComments { get { return this.mReplyComments; } }
-        public string Editor { get { return ""; } }
-    }
+            gateway.SaveChanges();
 
+            return Ok(blogComment);
+        }
+
+        protected override void Dispose(bool disposing) {
+            if (disposing) {
+                gateway.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private bool BlogCommentExists(int id) {
+            return gateway.BlogComments.Count(e => e.BlogCommentID == id) > 0;
+        }
+    }
 }

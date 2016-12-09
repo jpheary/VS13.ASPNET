@@ -149,6 +149,7 @@
                             WhenPosted: replycomment.WhenPosted,
                             LastEdited: ko.observable(replycomment.LastEdited),
                             EditedBy: replycomment.EditedBy,
+                            ResponseToComment: replycomment.ResponseToComment,
                             IsApproved: replycomment.IsApproved,
                             BlogId: replycomment.BlogId,
                             ReplyComments: replycomment.ReplyComments,
@@ -171,7 +172,7 @@
                         c = this;
                     }
                     else {
-                        $.each(this.replyComments(), function () {
+                        $.each(this.ReplyComments(), function () {
                             if (this.BlogCommentID() == commentId)
                                 c = this;
                         });
@@ -203,7 +204,7 @@
                 if(self.cancelpending()) {
                     pendingcomment = {
                         BlogCommentID: ko.observable(0),
-                        Author: "author",
+                        Author: "jpHeary",
                         IsBlogAdmin: false,
                         Body: ko.observable(""),
                         WhenPosted: moment().format('MM/DD/YYYY hh:mm'),
@@ -228,7 +229,7 @@
                 comment.Body(html);
                 model.CreateComment(comment, function (data) {
                     //Update view model to set comment id and hide editor on success
-                    comment.BlogCommentID(data.commentid);
+                    comment.BlogCommentID(data.BlogCommentID);
                     comment.Editor("");
                     self.reshade();
                     pendingcomment = null;
@@ -246,13 +247,13 @@
                 if(self.cancelpending()) {
                     pendingcomment = {
                         BlogCommentID: ko.observable(0),
-                        Author: "author",
+                        Author: "jpHeary",
                         IsBlogAdmin: false,
                         Body: ko.observable(""),
                         WhenPosted: moment().format('MM/DD/YYYY hh:mm'),
                         LastEdited: ko.observable(""),
                         EditedBy: "",
-                        ResponseToComment: 0,
+                        ResponseToComment: comment.BlogCommentID(),
                         IsApproved: true,
                         BlogId: @Model.BlogID,
                         ReplyComments: null,
@@ -271,7 +272,7 @@
                 comment.Body(html);
                 model.CreateReplyComment(comment, function (data) {
                     //Update view model to set commentid and hide editor on success
-                    comment.BlogCommentID(data.commentid);
+                    comment.BlogCommentID(data.BlogCommentID);
                     comment.Editor("");
                     self.reshade();
                     pendingcomment = null;
@@ -296,10 +297,11 @@
             self.saveedit = function (comment) {
                 //Update the specified comment from self.edit
                 var html = Controls.CKEditor.RemoveEditor();
-                comment.body(html);
-                model.UpdateComment(comment, function (data) {
-                    //Update view model to set last edited and hide the Editor on success
-                    comment.LastEdited(data.LastEdited);
+                comment.Body(html);
+                comment.LastEdited(moment().format('MM/DD/YYYY hh:mm'));
+                comment.EditedBy = "0";
+            model.UpdateComment(comment, function (data) {
+                    //Update view model to hide the Editor on success
                     comment.Editor("");
                     pendingcomment = null;
                 });
@@ -315,7 +317,7 @@
                 if (confirm('Remove this blog reply comment?')) {
                     model.RemoveComment(comment, function () {
                         //Update view model to remove comment on success
-                        $.each(self.comments(), function () { this.replyComments.remove(comment) });
+                        $.each(self.comments(), function () { this.ReplyComments.remove(comment) });
                         self.reshade();
                     });
                 }
@@ -365,7 +367,7 @@
                             case "reply":
                                 Controls.CKEditor.RemoveEditor();
                                 pendingcomment.Editor("");
-                                $.each(self.comments(), function () { this.replyComments.remove(pendingcomment) })
+                                $.each(self.comments(), function () { this.ReplyComments.remove(pendingcomment) })
                                 break;
                             case "edit":
                                 Controls.CKEditor.RemoveEditor();
@@ -396,7 +398,6 @@
                     type: "GET",
                     url: '/api/blogcomments/' + BlogId,
                     contentType: "application/json; charset=utf-8",
-                    //data: param = { action: "load", entryid: BlogId },
                     dataType: "json",
                     beforeSend: function () { $("Body").css("cursor", "wait"); },
                     success: function (data, status, xhr) {
@@ -409,12 +410,71 @@
                 });
             },
             CreateComment: function (comment, callback) {
+                $.ajax({
+                    type: "POST",
+                    url: '/api/blogcomments',
+                    contentType: "application/json; charset=UTF-8",
+                    data: JSON.stringify({BlogCommentID:comment.BlogCommentID(),Author:comment.Author,IsBlogAdmin:comment.IsBlogAdmin,Body:comment.Body(),WhenPosted:comment.WhenPosted,IsApproved:comment.IsApproved,BlogId:comment.BlogId}),
+                    dataType: "json",
+                    beforeSend: function () { $("body").css("cursor", "wait"); },
+                    success: function (data, status, xhr) {
+                        callback(data);
+                    },
+                    error: function (xhr, status, error) {
+                        alert('An error has occurred: ' + error + '.');
+                    },
+                    complete: function (xhr, status) { $("body").css("cursor", "default"); }
+                });
             },
             CreateReplyComment: function (comment, callback) {
+                $.ajax({
+                    type: "POST",
+                    url: '/api/blogcomments/',
+                    contentType: "application/json; charset=UTF-8",
+                    data: JSON.stringify({BlogCommentID:comment.BlogCommentID(),Author:comment.Author,IsBlogAdmin:comment.IsBlogAdmin,Body:comment.Body(),WhenPosted:comment.WhenPosted,ResponseToComment:comment.ResponseToComment,IsApproved:comment.IsApproved,BlogId:comment.BlogId}),
+                    dataType: "json",
+                    beforeSend: function () { $("body").css("cursor", "wait"); },
+                    success: function (data, status, xhr) {
+                        callback(data);
+                    },
+                    error: function (xhr, status, error) {
+                        alert('An error has occurred: ' + error + '.');
+                    },
+                    complete: function (xhr, status) { $("body").css("cursor", "default"); }
+                });
             },
             UpdateComment: function (comment, callback) {
+                $.ajax({
+                    type: "PUT",
+                    url: '/api/blogcomments/' + comment.BlogCommentID(),
+                    contentType: "application/json; charset=UTF-8",
+                    data: JSON.stringify({BlogCommentID:comment.BlogCommentID(),Author:comment.Author,IsBlogAdmin:comment.IsBlogAdmin,Body:comment.Body(),WhenPosted:comment.WhenPosted,LastEdited:comment.LastEdited(),EditedBy:comment.EditedBy,ResponseToComment:comment.ResponseToComment,IsApproved:comment.IsApproved,BlogId:comment.BlogId}),
+                    dataType: "json",
+                    beforeSend: function () { $("body").css("cursor", "wait"); },
+                    success: function (data, status, xhr) {
+                        callback(data);
+                    },
+                    error: function (xhr, status, error) {
+                        alert('An error has occurred: ' + error + '.');
+                    },
+                    complete: function (xhr, status) { $("body").css("cursor", "default"); }
+                });
             },
             RemoveComment: function (comment, callback) {
+                $.ajax({
+                    type: "DELETE",
+                    url: '/api/blogcomments/' + comment.BlogCommentID(),
+                    contentType: "application/json; charset=UTF-8",
+                    dataType: "json",
+                    beforeSend: function () { $("body").css("cursor", "wait"); },
+                    success: function (data, status, xhr) {
+                        callback();
+                    },
+                    error: function (xhr, status, error) {
+                        alert('An error has occurred: ' + error + '.');
+                    },
+                    complete: function (xhr, status) { $("body").css("cursor", "default"); }
+                });
             }
         };
 
@@ -422,7 +482,6 @@
         window.Controls.CKEditor = {
             // The single editor instance. Treat this as private.
             _editor1: null,
-            // CKEditor configuration
             _config: {
                 toolbar: [['Bold', 'Italic', 'Link', 'Unlink']],
                 height: 100,
