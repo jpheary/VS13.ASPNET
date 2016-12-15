@@ -20,6 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -123,6 +124,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\califon2004.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -164,7 +166,6 @@
     <Content Include="Views\CSS\Forms.cshtml" />
     <Content Include="Views\CSS\Buttons.cshtml" />
     <Content Include="Views\CSS\Images.cshtml" />
-    <Content Include="Views\CSS\Icons.cshtml" />
     <Content Include="Views\Layout\Menus.cshtml" />
     <Content Include="Views\Layout\Navigation.cshtml" />
     <Content Include="Views\Layout\Breadcrumbs.cshtml" />

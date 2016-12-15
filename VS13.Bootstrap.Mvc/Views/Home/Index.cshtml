@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "VS13.Bootstrap.Mvc";
+}
+
+<div class="jumbotron">
+    <h2>VS13.Bootstrap.Mvc</h2>
+    <blockquote>
+        <p>
+            Bootstrap is a front-end framework for building responsive websites. Whether it is application frameworks, blogs,
+            or other CMS applications, Bootstrap can be a good fit, as it can be as vanilla as you like. It's combination
+            of <abbr title="Hypertext Markup Language">HTML</abbr>, <abbr title="Cascading Style Sheets">CSS</abbr>, and
+            JavaScript make it easy to build robust sites without adding alot of code. With the default grid system, layouts
+            come together with ease, and the syling of buttons, navs, and tables amke basic markup look great from the get-go.
+            A dozen or so JavaScript plugins catapult you into adding interactive elements to your site.
+        </p>
+        <small>Bootstrap, Responsive Web Development, <cite title="O'Reilly">Jake Spurlock</cite></small>
+    </blockquote>
+    <p class="lead">This application explores design and implementation mechanisms using Bootstrap.</p>
+</div>
+<div class="row">
+    <div class="col-sm-4">
+        <h2>Bootstrap CSS</h2>
+        <p>
+            At the core of Bootstrap is a set of <abbr title="Hypertext Markup Language">HTML</abbr> elements that have been 
+            styled to allow for easy enhancement via classes and user syles.
+        </p>
+        <p>@Html.ActionLink("CSS","Index","CSS",new { area = "" },new { @class = "btn btn-default" })</p>
+    </div>
+    <div class="col-sm-4">
+        <h2>Bootstrap Layout Components</h2>
+        <p>
+            Bootstrap provides a toolkit of flexible components that can be used in designing application interfaces, web
+            features, and more. All of the plugins are available in one separate JavaScript file, or you can use the Bootstrap
+            customizer to pick and choose which plugins you want.
+        </p>
+        <p>@Html.ActionLink("Layouts","Index","Layout",new { area = "" },new { @class = "btn btn-default" })</p>
+    </div>
+    <div class="col-sm-4">
+        <h2>Bootstrap JavaScript Plugins</h2>
+        <p>
+            Bootstrap comes bundled with 13 jQuery plugins that extend the features and can add more interaction to your 
+            site. To get started with Bootstrap's JavaScript plugins, you don't need to be an advanced JavaScript developer. 
+            In fact, by utilizing Bootstrap Data API, most of the plugins can be triggered without writing a single line 
+            of code.
+        </p>
+        <p>@Html.ActionLink("Plugins","Index","Plugins",new { area = "" },new { @class = "btn btn-default" })</p>
+    </div>
+</div>

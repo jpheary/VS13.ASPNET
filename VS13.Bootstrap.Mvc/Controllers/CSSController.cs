@@ -38,9 +38,5 @@ namespace VS13.Controllers {
             // GET: Images
             return View();
         }
-        public ActionResult Icons() {
-            // GET: Icons
-            return View();
-        }
     }
 }
